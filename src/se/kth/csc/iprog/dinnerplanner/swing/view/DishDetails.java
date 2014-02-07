@@ -40,7 +40,7 @@ public class DishDetails extends JPanel{
 		
 		JPanel top = getTopPanel();
 		
-		JPanel left = getLeftPanel();
+		JScrollPane left = getLeftPanel();
 		JScrollPane right = getRightPanel(Ingredients);
 		
 		this.setLayout(new BorderLayout());
@@ -96,12 +96,12 @@ public class DishDetails extends JPanel{
 	}
 	
 	
-	JPanel getLeftPanel()
+	JScrollPane getLeftPanel()
 	{
-		JPanel left = new JPanel();
+		JScrollPane left = new JScrollPane();
 		left.setMinimumSize(new Dimension(100, 100));
-		left.add(new JButton("LEFT SHIT")); 
 		
+		left.setViewportView(new JLabel("Dish preparattttttion"));
 		return left;
 	}
 	
