@@ -2,6 +2,8 @@ package se.kth.csc.iprog.dinnerplanner.swing.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
@@ -11,27 +13,50 @@ import external.WrapLayout;
 public class DishListView extends JPanel{
 	private static final long serialVersionUID = 1L;
 
+	public static class Dish extends JPanel {
+		private static final long serialVersionUID = 1L;
+	 
+		public Dish(String label, String imagePath) {
+			this.setLayout(new BorderLayout());
+			
+			ImageIcon icon = new ImageIcon(imagePath);
+			JButton button = new JButton(icon);
+			button.setContentAreaFilled(false);
+			button.addActionListener(new ActionListener() {			
+				@Override
+				public void actionPerformed(ActionEvent action) {
+					//TODO push some kind of data to dish details
+					DishDetails.OpenWindow();
+				}
+			});
+			
+			button.setPreferredSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
+			this.add(button, BorderLayout.CENTER);
+			
+			this.add(new JLabel(label, JLabel.CENTER), BorderLayout.SOUTH);
+		}
+	}
+	
+	private JPanel insideScroll;
+	
 	public DishListView() {
 
 		JTabbedPane tabbedPane = new JTabbedPane();
 
 		//TODO: Change JTextField into a custom one for a nicer search box 
-		JTextField t1 = new JTextField();
+		SearchPanel t1 = new SearchPanel();
 		tabbedPane.addTab("Starter", t1);
-		JTextField t2 = new JTextField();
+		SearchPanel t2 = new SearchPanel();
 		tabbedPane.addTab("Main", t2);
-		JTextField t3 = new JTextField();
+		SearchPanel t3 = new SearchPanel();
 		tabbedPane.addTab("Dessert", t3);
 		
 		
-		JPanel insideScroll = new JPanel();
+		insideScroll = new JPanel();
 		insideScroll.setLayout(new WrapLayout());
 		
-		JButton b;
 		for(int i = 0; i < 18; ++i) {
-			b = new JButton("Food");
-			b.setPreferredSize(new Dimension(90, 90));
-			insideScroll.add(b);
+			insideScroll.add(new Dish("Food " + (i + 1), "images/bakedbrie.jpg"));
 		}
 		
 		JScrollPane scroll = new JScrollPane(insideScroll);
