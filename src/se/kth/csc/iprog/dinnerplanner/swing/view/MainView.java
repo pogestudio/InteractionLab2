@@ -16,14 +16,21 @@ public class MainView extends JPanel {
 	DishDetails dishDetails;
 	DinnerModel wholeModel;
 	JSplitPane split;
-	JButton dinnerListView;
+	DinnerListView dinnerListView;
 	
 	public MainView(DinnerModel instancedModel){
 		wholeModel = instancedModel;
 		
 		DishDetails.OpenWindow();
 		
-		
+
+		dishes = new DishListView();
+		dishes.setMinimumSize(new Dimension(500,50));
+		dinnerListView = new DinnerListView(); 
+				
+		split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+				dishes,
+				dinnerListView);
 		
 		//this.add(dishDetails, BorderLayout.CENTER);
 	}
