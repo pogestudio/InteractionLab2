@@ -21,6 +21,7 @@ public class MainView extends JPanel {
 	public MainView(DinnerModel instancedModel){
 		wholeModel = instancedModel;
 		DishDetails.OpenWindow(wholeModel.getAllIngredients());
+		ListIngredients.OpenWindow(wholeModel.getAllIngredients());
 		
 		this.setLayout(new BorderLayout());
 		
