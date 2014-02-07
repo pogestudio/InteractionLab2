@@ -1,9 +1,14 @@
 package se.kth.csc.iprog.dinnerplanner.swing.view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.*;
+
+import external.ScrollablePanel;
+import external.ScrollablePanel.ScrollableSizeHint;
+import external.WrapLayout;
 
 
 public class DishListView extends JPanel{
@@ -23,14 +28,18 @@ public class DishListView extends JPanel{
 		
 		
 		JPanel insideScroll = new JPanel();
-		JScrollPane scroll = new JScrollPane(insideScroll);
+		insideScroll.setLayout(new WrapLayout());
+		
 		JButton b;
-		for(int i = 0; i < 8; ++i) {
+		for(int i = 0; i < 18; ++i) {
 			b = new JButton("Food");
-			b.setSize(50, 50);
-			scroll.add(b);
+			b.setPreferredSize(new Dimension(90, 90));
+			insideScroll.add(b);
 		}
 		
+		JScrollPane scroll = new JScrollPane(insideScroll);
+		scroll.setHorizontalScrollBarPolicy(ScrollPaneLayout.HORIZONTAL_SCROLLBAR_NEVER);
+			
 		this.setLayout(new BorderLayout());
 		this.add(tabbedPane, BorderLayout.NORTH);
 		this.add(scroll, BorderLayout.CENTER);

@@ -1,6 +1,7 @@
 package se.kth.csc.iprog.dinnerplanner.swing.view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 import javax.swing.*;
 
@@ -13,15 +14,27 @@ public class MainView extends JPanel {
 	
 	DishListView dishes;
 	DinnerModel wholeModel;
-
+	JSplitPane split;
+	JButton dinnerListView;
+	
 	public MainView(DinnerModel instancedModel){
 		wholeModel = instancedModel;
 		
-		dishes = new DishListView();
-		
 		this.setLayout(new BorderLayout());
-		this.add(new JButton("DINNERVIEW"), BorderLayout.EAST);
-		this.add(dishes, BorderLayout.CENTER);
+		
+		dishes = new DishListView();
+		dishes.setMinimumSize(new Dimension(500, 50));
+		
+		dinnerListView = new JButton("DINNERVIEW"); 
+				
+		split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+				dishes,
+				dinnerListView);
+		
+		split.setResizeWeight(1.0);
+		split.setDividerLocation(150);
+		
+		this.add(split, BorderLayout.CENTER);
 	}
 	
 }
