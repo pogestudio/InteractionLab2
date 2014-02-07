@@ -4,8 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashSet;
 
 import javax.swing.*;
+
+import se.kth.csc.iprog.dinnerplanner.model.Ingredient;
 
 import external.WrapLayout;
 
@@ -26,7 +29,7 @@ public class DishListView extends JPanel{
 				@Override
 				public void actionPerformed(ActionEvent action) {
 					//TODO push some kind of data to dish details
-					DishDetails.OpenWindow();
+					DishDetails.OpenWindow(new HashSet<Ingredient>());
 				}
 			});
 			
