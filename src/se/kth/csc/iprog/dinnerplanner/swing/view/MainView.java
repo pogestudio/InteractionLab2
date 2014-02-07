@@ -16,12 +16,17 @@ public class MainView extends JPanel {
 	JButton plusButton = new JButton();
 	JButton minusButton = new JButton();
 	
-	public MainView(){
-
+	DinnerModel wholeModel;
+	
+	public MainView(DinnerModel instancedModel){
+		wholeModel = instancedModel;
+		
 		label.setText("Hello world");
 		
 		// Add label to the view
 		this.add(label);
+		this.add(plusButton);
+		this.add(minusButton);
 		
 		
 		// Setup the rest of the view layout
