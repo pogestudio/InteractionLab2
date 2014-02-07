@@ -44,6 +44,7 @@ public class DinnerPlanner extends JFrame {
 		dinnerPlanner.setSize(800, 500);
 		
 
+
 	}
 
 }

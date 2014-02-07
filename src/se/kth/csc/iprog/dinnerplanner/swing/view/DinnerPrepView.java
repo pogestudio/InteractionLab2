@@ -17,19 +17,14 @@ public class DinnerPrepView extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	public static String frameName = "Dinner Planner - Preparation";
+	private static final String PREP_INTRO = "Dinner menu preparation \n";
 	
 	Set<Dish> fullMenu;
 	Set<Ingredient> allIngr;
 	
 
 	public DinnerPrepView(DinnerModel instancedModel){
-		
-		fullMenu = instancedModel.getDishes();
-		allIngr = instancedModel.getAllIngredients();
-		
-		
-	
-		ArrayList<String> starters = getDesc(instancedModel, 1);
+		ArrayList<String> starters = getDesc(instancedModel, 1);	
 		ArrayList<String> main = getDesc(instancedModel, 2);
 		ArrayList<String> desert = getDesc(instancedModel, 3);
 		
@@ -38,35 +33,48 @@ public class DinnerPrepView extends JPanel {
 		meals.addAll(main);
 		meals.addAll(desert);
 		
-		String desc = "";
+		String desc = PREP_INTRO;
 		for (String meal : meals)
-			desc = desc + "<br>" + meal + "<br>";
-		
-		System.out.println(desc);
+			desc = desc + meal + "\n";
 		
 		JTextArea textArea;
+		this.setLayout(new BorderLayout());
 		if(!desc.equals("")){
-			textArea = new JTextArea(5,20);
-			textArea.setText("<html>" + desc + "</html>");
-	    //    textArea.setLineWrap(true);
-	        
+			textArea = new JTextArea(desc);
+			
+			textArea.setLineWrap(true);
 	        textArea.setWrapStyleWord(true);
 	        textArea.setOpaque(false);
 	        textArea.setEditable(false);
 
 		}
-		else
+		else{
 			textArea = new JTextArea("No meals to display");
+		}
+		
+		JScrollPane scrollPane = new JScrollPane(textArea);
 			
-		this.add(textArea, BorderLayout.CENTER);
+		this.add(scrollPane, BorderLayout.CENTER);
 		
 	}
 	
 	private ArrayList<String> getDesc(DinnerModel dm, int type){
 		Set<Dish> starters = dm.getDishesOfType(type);
 		ArrayList<String> list = new ArrayList<String>();
+		
+		String mealtype = "";
+		if(type == 1){
+			mealtype = "Starter: ";
+		}
+		else if(type == 2){
+			mealtype = "Main: ";
+		}
+		else{
+			mealtype = "Desert: ";
+			
+		}
 		for (Dish dish : starters) {
-			list.add("Starter: " + dish.getName() + "\n " + dish.getDescription());
+			list.add(mealtype + dish.getName() + "\n " + dish.getDescription());
 		}
 		return list;
 	}
