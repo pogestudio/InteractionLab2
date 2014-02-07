@@ -3,9 +3,13 @@ package se.kth.csc.iprog.dinnerplanner.swing.view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.util.Set;
 
 import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableModel;
 
+import se.kth.csc.iprog.dinnerplanner.model.Ingredient;
 import external.ScrollablePanel;
 import external.ScrollablePanel.ScrollableSizeHint;
 import external.WrapLayout;
@@ -14,9 +18,9 @@ import external.WrapLayout;
 public class DishDetails extends JPanel{
 	private static final long serialVersionUID = 1L;
 	
-	public static void OpenWindow()
+	public static void OpenWindow(Set<Ingredient> Ingredients)
 	{
-		DishDetails detailsForWindow = new DishDetails();
+		DishDetails detailsForWindow = new DishDetails(Ingredients);
 		 JFrame frame = new JFrame("Simple GUI"); 
 		 //JLabel textLabel = new JLabel("I'm a label in the window",SwingConstants.CENTER);
 		 detailsForWindow.setPreferredSize(new Dimension(500, 500));
@@ -30,12 +34,14 @@ public class DishDetails extends JPanel{
 
 	}
 
-	public DishDetails() {
-
+	public DishDetails(Set<Ingredient> Ingredients) {		
 		
+		
+		
+		JPanel top = getTopPanel();
 		
 		JPanel left = getLeftPanel();
-		JPanel right = getRightPanel();
+		JScrollPane right = getRightPanel(Ingredients);
 		
 		this.setLayout(new BorderLayout());
 
@@ -46,9 +52,6 @@ public class DishDetails extends JPanel{
 		
 		absoluteBottom.setResizeWeight(1.0);
 		absoluteBottom.setDividerLocation(0);
-		
-		
-		JPanel top = getTopPanel();
 		
 		JSplitPane masterSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
 				top,
@@ -102,12 +105,16 @@ public class DishDetails extends JPanel{
 		return left;
 	}
 	
-	JPanel getRightPanel()
+	JScrollPane getRightPanel(Set<Ingredient> Ingredients)
 	{
-		JPanel right = new JPanel();
-		right.setMinimumSize(new Dimension(100, 100));
-		right.add(new JButton("RIGHT SHIIIIIIIT")); 	
-		return right;
+//		JPanel right = new JPanel();
+//		right.setMinimumSize(new Dimension(100, 100));
+//		right.add(new JButton("RIGHT SHIIIIIIIT")); 	
+//		return right;
+		
+	    ListIngredients allIngredients = new ListIngredients();
+	    
+	      return allIngredients.getTableForIngredients(Ingredients);
 	}
 	
 }
