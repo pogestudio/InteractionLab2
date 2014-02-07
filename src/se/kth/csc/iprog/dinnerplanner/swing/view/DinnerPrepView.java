@@ -4,10 +4,8 @@ import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.Set;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 
 import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
 import se.kth.csc.iprog.dinnerplanner.model.Dish;
@@ -17,7 +15,7 @@ public class DinnerPrepView extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	public static String frameName = "Dinner Planner - Preparation";
-	private static final String PREP_INTRO = "Dinner menu preparation \n";
+	private static final String PREP_INTRO = "<h1>Dinner menu preparation </h1><br>";
 	
 	Set<Dish> fullMenu;
 	Set<Ingredient> allIngr;
@@ -35,27 +33,19 @@ public class DinnerPrepView extends JPanel {
 		
 		String desc = PREP_INTRO;
 		for (String meal : meals)
-			desc = desc + meal + "\n";
+			desc = desc + meal + "<br> <br>";
 		
-		JTextArea textArea;
 		this.setLayout(new BorderLayout());
+		JTextPane textPane = new JTextPane();
+		textPane.setContentType("text/html");
 		if(!desc.equals("")){
-			textArea = new JTextArea(desc);
 			
-			textArea.setLineWrap(true);
-	        textArea.setWrapStyleWord(true);
-	        textArea.setOpaque(false);
-	        textArea.setEditable(false);
+			textPane.setText("<html> <center>" + desc + " </center></html>");
+		}
+		else
+			textPane.setText("No meals to display");
 
-		}
-		else{
-			textArea = new JTextArea("No meals to display");
-		}
-		
-		JScrollPane scrollPane = new JScrollPane(textArea);
-			
-		this.add(scrollPane, BorderLayout.CENTER);
-		
+		this.add(textPane, BorderLayout.CENTER);
 	}
 	
 	private ArrayList<String> getDesc(DinnerModel dm, int type){
@@ -74,17 +64,9 @@ public class DinnerPrepView extends JPanel {
 			
 		}
 		for (Dish dish : starters) {
-			list.add(mealtype + dish.getName() + "\n " + dish.getDescription());
+			list.add("<b>" + mealtype + dish.getName() + "</b>" + "<br> " + dish.getDescription());
 		}
 		return list;
 	}
-	
-	
-
-	
-	public String getPrep(){
-		return "Default prep string";
-	}
-	
 }
 
