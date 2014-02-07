@@ -13,6 +13,7 @@ public class MainView extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	DishListView dishes;
+	DishDetails dishDetails;
 	DinnerModel wholeModel;
 	JSplitPane split;
 	JButton dinnerListView;
@@ -20,21 +21,11 @@ public class MainView extends JPanel {
 	public MainView(DinnerModel instancedModel){
 		wholeModel = instancedModel;
 		
-		this.setLayout(new BorderLayout());
+		DishDetails.OpenWindow();
 		
-		dishes = new DishListView();
-		dishes.setMinimumSize(new Dimension(500, 50));
 		
-		dinnerListView = new JButton("DINNERVIEW"); 
-				
-		split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-				dishes,
-				dinnerListView);
 		
-		split.setResizeWeight(1.0);
-		split.setDividerLocation(150);
-		
-		this.add(split, BorderLayout.CENTER);
+		//this.add(dishDetails, BorderLayout.CENTER);
 	}
 	
 }
