@@ -22,8 +22,8 @@ public class DishListView extends JPanel{
 		tabbedPane.addTab("Dessert", t3);
 		
 		
-		JScrollPane scroll = new JScrollPane();
-		scroll.setLayout(new ScrollPaneLayout());
+		JPanel insideScroll = new JPanel();
+		JScrollPane scroll = new JScrollPane(insideScroll);
 		JButton b;
 		for(int i = 0; i < 8; ++i) {
 			b = new JButton("Food");
