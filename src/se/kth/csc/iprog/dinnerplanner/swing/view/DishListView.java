@@ -2,12 +2,9 @@ package se.kth.csc.iprog.dinnerplanner.swing.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 
 import javax.swing.*;
 
-import external.ScrollablePanel;
-import external.ScrollablePanel.ScrollableSizeHint;
 import external.WrapLayout;
 
 

@@ -15,7 +15,7 @@ public class MainView extends JPanel {
 	DishListView dishes;
 	DinnerModel wholeModel;
 	JSplitPane split;
-	JButton dinnerListView;
+	DinnerListView dinnerListView;
 	
 	public MainView(DinnerModel instancedModel){
 		wholeModel = instancedModel;
@@ -25,7 +25,7 @@ public class MainView extends JPanel {
 		dishes = new DishListView();
 		dishes.setMinimumSize(new Dimension(500, 50));
 		
-		dinnerListView = new JButton("DINNERVIEW"); 
+		dinnerListView = new DinnerListView(); 
 				
 		split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
 				dishes,
