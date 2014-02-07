@@ -34,12 +34,15 @@ public class DinnerPlanner extends JFrame {
 		
 		//Adding the view to the main JFrame
 		dinnerPlanner.getContentPane().add(mainView);
-		
+
 		//Resize it so content fits
 		dinnerPlanner.pack();
 		
 		//and starting the JFrame
 		dinnerPlanner.setVisible(true);
+
+		dinnerPlanner.setSize(700, 500);
+		
 
 	}
 
