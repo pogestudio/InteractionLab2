@@ -4,15 +4,18 @@ import java.awt.BorderLayout;
 
 import javax.swing.*;
 
+import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
+
 
 public class MainView extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
 	
-	JLabel label;
 	DishListView dishes;
-	
-	public MainView(){
+	DinnerModel wholeModel;
+
+	public MainView(DinnerModel instancedModel){
+		wholeModel = instancedModel;
 		
 		dishes = new DishListView();
 		

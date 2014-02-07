@@ -30,7 +30,7 @@ public class DinnerPlanner extends JFrame {
 		dinnerPlanner.setTitle("Dinner Planner");
 		
 		//Creating the first view
-		MainView mainView = new MainView();
+		MainView mainView = new MainView(dinnerPlanner.getModel());
 		
 		//Adding the view to the main JFrame
 		dinnerPlanner.getContentPane().add(mainView);
