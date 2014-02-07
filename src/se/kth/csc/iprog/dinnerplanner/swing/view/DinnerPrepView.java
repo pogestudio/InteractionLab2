@@ -9,17 +9,12 @@ import javax.swing.JTextPane;
 
 import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
 import se.kth.csc.iprog.dinnerplanner.model.Dish;
-import se.kth.csc.iprog.dinnerplanner.model.Ingredient;
+
 
 public class DinnerPrepView extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	public static String frameName = "Dinner Planner - Preparation";
 	private static final String PREP_INTRO = "<h1>Dinner menu preparation </h1><br>";
-	
-	Set<Dish> fullMenu;
-	Set<Ingredient> allIngr;
-	
 
 	public DinnerPrepView(DinnerModel instancedModel){
 		ArrayList<String> starters = getDesc(instancedModel, 1);	
@@ -38,8 +33,7 @@ public class DinnerPrepView extends JPanel {
 		this.setLayout(new BorderLayout());
 		JTextPane textPane = new JTextPane();
 		textPane.setContentType("text/html");
-		if(!desc.equals("")){
-			
+		if(!desc.equals(PREP_INTRO)){
 			textPane.setText("<html> <center>" + desc + " </center></html>");
 		}
 		else
