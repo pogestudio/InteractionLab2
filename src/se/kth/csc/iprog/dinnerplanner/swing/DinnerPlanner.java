@@ -28,7 +28,7 @@ public class DinnerPlanner extends JFrame {
 		//Initiating the main JFrame
 		DinnerPlanner dinnerPlanner = new DinnerPlanner();
 		dinnerPlanner.setTitle("Dinner Planner");
-		/*
+		
 		//Creating the first view
 		MainView mainView = new MainView(dinnerPlanner.getModel());
 		
@@ -42,22 +42,7 @@ public class DinnerPlanner extends JFrame {
 		dinnerPlanner.setVisible(true);
 
 		dinnerPlanner.setSize(800, 500);
-		*/
 
-		
-		//Creating the first view
-		DinnerPrepView mainView = new DinnerPrepView(dinnerPlanner.getModel());
-		
-		//Adding the view to the main JFrame
-		dinnerPlanner.getContentPane().add(mainView);
-
-		//Resize it so content fits
-		dinnerPlanner.pack();
-		
-		//and starting the JFrame
-		dinnerPlanner.setVisible(true);
-
-		dinnerPlanner.setSize(800, 500);
 	}
 
 }
