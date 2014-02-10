@@ -71,5 +71,15 @@ public class Dish {
 		}
 		return false;
 	}
+	
+	public float getPrice()
+	{
+		Set<Ingredient> allIngredients = getIngredients();
+		float totalPrice = 0;
+		for(Ingredient i : allIngredients){
+				totalPrice += i.getPrice();
+		}
+		return totalPrice;
+	}
 
 }
