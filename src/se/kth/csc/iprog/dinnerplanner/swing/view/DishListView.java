@@ -18,7 +18,7 @@ import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
 public class DishListView extends JPanel{
 	private static final long serialVersionUID = 1L;
 
-	public static class CellRenderer extends JPanel implements ListCellRenderer<Dish> {
+	public static class CellRenderer extends JPanel implements ListCellRenderer {
 		private static final long serialVersionUID = 1L;
 
 		private JLabel text;
@@ -49,12 +49,12 @@ public class DishListView extends JPanel{
 		
 		@Override
 		public Component getListCellRendererComponent(
-				JList<? extends Dish> list, Dish value, int index,
+				JList list, Object value, int index,
 				boolean isSelected, boolean cellHasFocus) {
 		
-			text.setText(value.getName());
+			text.setText(((Dish)value).getName());
 			
-			button.setIcon(new ImageIcon("images/" + value.getImage()));
+			button.setIcon(new ImageIcon("images/" + ((Dish)value).getImage()));
 			
 			setPreferredSize(new Dimension(150, 150));
 
@@ -88,17 +88,17 @@ public class DishListView extends JPanel{
 		
 	    ArrayList<Dish> dishList = getDishes(type);
 	    
-		DefaultListModel<Dish> model = new DefaultListModel<Dish>();
+		DefaultListModel model = new DefaultListModel();
 
 		for (Dish dish : dishList) {
 			model.addElement(dish);
 		}
-		JList<Dish> scroll = new JList<Dish>(model);
+		JList scroll = new JList(model);
 		scroll.setDragEnabled(true);
 		scroll.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		scroll.setVisibleRowCount(-1);
 		scroll.setCellRenderer(new CellRenderer());
-		scroll.setTransferHandler(new DishTransferHandler());
+		scroll.setTransferHandler(new DishTransferHandler(false));
 		scroll.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		panel.add(scroll, BorderLayout.CENTER);
 		return panel;

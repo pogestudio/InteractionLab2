@@ -19,10 +19,12 @@ public class DishTransferHandler extends TransferHandler {
     private int[] indices;
     private int addIndex = -1; //Location where items were added
     private int addCount; //Number of items added.
-
-    public DishTransferHandler() {
+    private boolean remove;
+    
+    public DishTransferHandler(boolean remove) {
         super();
         localObjectFlavor = new ActivationDataFlavor(Object[].class, DataFlavor.javaJVMLocalObjectMimeType, "Array of items");
+        this.remove = remove;
     }
 	@Override
 	protected Transferable createTransferable(JComponent c) {
@@ -54,6 +56,9 @@ public class DishTransferHandler extends TransferHandler {
                 int idx = index++;
                 listModel.add(idx, values[i]);
                 target.addSelectionInterval(idx, idx);
+                if(remove) {
+                	
+                }
             }
             addCount = target.equals(source) ? values.length : 0;
             return true;

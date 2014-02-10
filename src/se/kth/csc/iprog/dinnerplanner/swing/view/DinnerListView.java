@@ -55,7 +55,7 @@ public class DinnerListView extends JPanel{
 		
 		
 		DefaultListModel<Dish> lmodel = new DefaultListModel<Dish>();
-		lmodel.addElement(new Dish("icecream", 0, "images/icecream.jpg", "Nice food"));
+		lmodel.addElement(new Dish("icecream", 0, "icecream.jpg", "Nice food"));
 	
 		
 		dishes = new DinnerDishList(lmodel);

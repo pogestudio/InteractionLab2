@@ -17,13 +17,13 @@ import se.kth.csc.iprog.dinnerplanner.model.Dish;
 
 import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
 
-public class DinnerDishList extends JList<Dish> {
+public class DinnerDishList extends JList {
 
 	private static final long serialVersionUID = 1L;
 	
 	private DinnerModel chosenModel;
 
-	public static class CellRenderer extends JPanel implements ListCellRenderer<Dish> {
+	public static class CellRenderer extends JPanel implements ListCellRenderer {
 		private static final long serialVersionUID = 1L;
 
 		private JLabel text;
@@ -44,10 +44,10 @@ public class DinnerDishList extends JList<Dish> {
 		
 		@Override
 		public Component getListCellRendererComponent(
-				JList<? extends Dish> list, Dish value, int index,
+				JList list, Object value, int index,
 				boolean isSelected, boolean cellHasFocus) {
 		
-			text.setText(value.getName());
+			text.setText(((Dish)value).getName());
 			
 
 		    if (isSelected) {
@@ -61,14 +61,14 @@ public class DinnerDishList extends JList<Dish> {
 		}
 	}
 
-	public DinnerDishList(ListModel<Dish> model) {
+	public DinnerDishList(ListModel model) {
 		super(model);
 
 		setCellRenderer(new CellRenderer());
 		setDropMode(DropMode.INSERT);
 		setDragEnabled(true);
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		setTransferHandler(new DishTransferHandler());
+		setTransferHandler(new DishTransferHandler(true));
 	}
 	
 	public void setDinnerModel(DinnerModel model)
