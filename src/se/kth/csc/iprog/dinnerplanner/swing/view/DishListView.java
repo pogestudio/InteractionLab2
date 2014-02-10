@@ -4,12 +4,15 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.*;
 
+import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
 import se.kth.csc.iprog.dinnerplanner.model.Ingredient;
-
+import se.kth.csc.iprog.dinnerplanner.model.Dish;
 import external.WrapLayout;
 
 
@@ -68,9 +71,16 @@ public class DishListView extends JPanel{
 		this.setLayout(new BorderLayout());
 		this.add(tabbedPane, BorderLayout.NORTH);
 		this.add(scroll, BorderLayout.CENTER);
-		
-		
-	}
+	}	
 	
+	private ArrayList<String> getDishes(int type){
+		DinnerModel model = new DinnerModel();
+		Set<se.kth.csc.iprog.dinnerplanner.model.Dish> dishSet = model.getDishesOfType(type);
+		ArrayList<String> dishNames = new ArrayList<String>();
+		for (se.kth.csc.iprog.dinnerplanner.model.Dish dish : dishSet){
+			dishNames.add(dish.getName());
+		}
+		return dishNames;
+	}
 	
 }
