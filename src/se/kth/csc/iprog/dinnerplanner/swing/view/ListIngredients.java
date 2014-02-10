@@ -3,7 +3,6 @@ package se.kth.csc.iprog.dinnerplanner.swing.view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.JFrame;

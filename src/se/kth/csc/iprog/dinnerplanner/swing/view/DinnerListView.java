@@ -1,13 +1,13 @@
 package se.kth.csc.iprog.dinnerplanner.swing.view;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Set;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,6 +18,10 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import se.kth.csc.iprog.dinnerplanner.model.Dish;
+
+import external.WrapLayout;
 
 import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
 import se.kth.csc.iprog.dinnerplanner.model.Ingredient;
@@ -59,7 +63,13 @@ public class DinnerListView extends JPanel implements ChangeListener{
 		JPanel middle = new JPanel();
 		middle.setLayout(new BorderLayout());
 		
-		dishes = new DinnerDishList();
+		
+		DefaultListModel<Dish> lmodel = new DefaultListModel<Dish>();
+		lmodel.addElement(new Dish("icecream", 0, "images/icecream.jpg", "Nice food"));
+	
+		
+		dishes = new DinnerDishList(lmodel);
+		dishes.setLayout(new WrapLayout());
 		JLabel title = new JLabel("Dinner menu", JLabel.CENTER);
 		title.setFont(new Font(title.getFont().getName(), Font.PLAIN, 30));
 		middle.add(title, BorderLayout.NORTH);
@@ -67,7 +77,8 @@ public class DinnerListView extends JPanel implements ChangeListener{
 		JScrollPane scroll = new JScrollPane(dishes);
 		middle.add(scroll, BorderLayout.CENTER);
 		scroll.setBorder(new EmptyBorder(0,0,0,0));
-
+	
+		
 		this.add(middle, BorderLayout.CENTER);
 		
 		//Bottom - buttons

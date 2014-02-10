@@ -2,20 +2,12 @@ package se.kth.csc.iprog.dinnerplanner.swing.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.util.Set;
 
 import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
 
-import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
 import se.kth.csc.iprog.dinnerplanner.model.Dish;
 import se.kth.csc.iprog.dinnerplanner.model.Ingredient;
-import external.ScrollablePanel;
-import external.ScrollablePanel.ScrollableSizeHint;
-import external.WrapLayout;
-
 
 public class DishDetails extends JPanel{
 	private static final long serialVersionUID = 1L;
