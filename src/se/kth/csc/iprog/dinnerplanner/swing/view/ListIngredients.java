@@ -67,6 +67,9 @@ public class ListIngredients {
 		        	  return stringToShow; }
 		      };
 		      JTable table = new JTable(dataModel);
+		      table.getColumnModel().getColumn(0).setHeaderValue("Ingredient");
+		      table.getColumnModel().getColumn(1).setHeaderValue("Quantity");
+		      table.getColumnModel().getColumn(2).setHeaderValue("Cost");
 		      JScrollPane scrollpane = new JScrollPane(table);
 		      return scrollpane;
 	}
