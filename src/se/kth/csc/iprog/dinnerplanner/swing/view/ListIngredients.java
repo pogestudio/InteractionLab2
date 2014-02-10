@@ -20,7 +20,7 @@ public class ListIngredients {
 	{
 		ListIngredients ingredientsInList = new ListIngredients();
 		JScrollPane tableToShow = ingredientsInList.getTableForIngredients(Ingredients);
-		 JFrame frame = new JFrame("Simple GUI"); 
+		 JFrame frame = new JFrame("Ingredients"); 
 		 //JLabel textLabel = new JLabel("I'm a label in the window",SwingConstants.CENTER);
 		tableToShow.setPreferredSize(new Dimension(500, 500));
 		tableToShow.setMinimumSize(new Dimension(100, 100));
