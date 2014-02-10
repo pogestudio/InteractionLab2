@@ -33,7 +33,7 @@ public class DishListView extends JPanel{
 				@Override
 				public void actionPerformed(ActionEvent action) {
 					//TODO push some kind of data to dish details
-					DishDetails.OpenWindow(new HashSet<Ingredient>());
+					DishDetails.OpenWindow(null);
 				}
 			});
 			

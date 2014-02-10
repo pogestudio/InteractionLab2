@@ -23,12 +23,14 @@ public class DishDetails extends JPanel{
 	public static void OpenWindow(Dish dish)
 	{
 		DishDetails detailsForWindow = new DishDetails(dish);
-		 JFrame frame = new JFrame("Simple GUI"); 
+		 JFrame frame = new JFrame("Dish Details"); 
+		 
 		 //JLabel textLabel = new JLabel("I'm a label in the window",SwingConstants.CENTER);
 		 detailsForWindow.setPreferredSize(new Dimension(500, 500));
-		detailsForWindow.setMinimumSize(new Dimension(100, 100));
+		 detailsForWindow.setMinimumSize(new Dimension(100, 100));
 
-		 frame.getContentPane().add(detailsForWindow, BorderLayout.CENTER); 
+		 frame.getContentPane().add(detailsForWindow, BorderLayout.CENTER);
+		 
 		 //Display the window. 
 		 frame.setLocationRelativeTo(null); 
 		 frame.pack(); 
@@ -53,15 +55,15 @@ public class DishDetails extends JPanel{
 				left,
 				right);
 		
-		absoluteBottom.setResizeWeight(1.0);
-		absoluteBottom.setDividerLocation(0);
+		absoluteBottom.setResizeWeight(0.5);
+		//absoluteBottom.setDividerLocation(0.5);
 		
 		JSplitPane masterSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
 				top,
 				absoluteBottom);
 		
-		masterSplitPane.setResizeWeight(1.0);
-		masterSplitPane.setDividerLocation(0);
+		masterSplitPane.setResizeWeight(0.3);
+		//masterSplitPane.setDividerLocation(0);
 		
 		
 		this.add(masterSplitPane, BorderLayout.CENTER);
