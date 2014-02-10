@@ -15,7 +15,7 @@ import javax.swing.TransferHandler;
 public class DishTransferHandler extends TransferHandler {
 	private static final long serialVersionUID = 1L;
     private final DataFlavor localObjectFlavor;
-    private JList<String> source;
+    private JList source;
     private int[] indices;
     private int addIndex = -1; //Location where items were added
     private int addCount; //Number of items added.
