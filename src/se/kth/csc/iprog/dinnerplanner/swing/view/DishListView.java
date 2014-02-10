@@ -1,30 +1,39 @@
 package se.kth.csc.iprog.dinnerplanner.swing.view;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashSet;
 
 import javax.swing.*;
 
+import se.kth.csc.iprog.dinnerplanner.model.Dish;
 import se.kth.csc.iprog.dinnerplanner.model.Ingredient;
-
-import external.WrapLayout;
-
 
 public class DishListView extends JPanel{
 	private static final long serialVersionUID = 1L;
 
-	public static class Dish extends JPanel {
+	public static class CellRenderer extends JPanel implements ListCellRenderer<Dish> {
 		private static final long serialVersionUID = 1L;
-	 
-		public Dish(String label, String imagePath) {
+
+		private JLabel text;
+		JButton button;
+		ImageIcon icon;
+		
+		public CellRenderer() {
+		    setOpaque(true);
+
 			this.setLayout(new BorderLayout());
 			
-			ImageIcon icon = new ImageIcon(imagePath);
-			JButton button = new JButton(icon);
+			icon = null;
+		    text = new JLabel("ASDFGASDFG", JLabel.CENTER);
+		    add(text);
+			button = new JButton();
 			button.setContentAreaFilled(false);
+			button.setMargin(new Insets(50, 50, 50, 50));			
 			button.addActionListener(new ActionListener() {			
 				@Override
 				public void actionPerformed(ActionEvent action) {
@@ -32,11 +41,31 @@ public class DishListView extends JPanel{
 					DishDetails.OpenWindow(new HashSet<Ingredient>());
 				}
 			});
+			this.add(button, BorderLayout.CENTER);			
+			this.add(text, BorderLayout.SOUTH);
+		  }
+		
+		
+		
+		@Override
+		public Component getListCellRendererComponent(
+				JList<? extends Dish> list, Dish value, int index,
+				boolean isSelected, boolean cellHasFocus) {
+		
+			text.setText(value.getName());
 			
-			button.setPreferredSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
-			this.add(button, BorderLayout.CENTER);
+			button.setIcon(new ImageIcon(value.getImage()));
 			
-			this.add(new JLabel(label, JLabel.CENTER), BorderLayout.SOUTH);
+			setPreferredSize(new Dimension(150, 150));
+
+		    if (isSelected) {
+		      setBackground(list.getSelectionBackground());
+		      setForeground(list.getSelectionForeground());
+		    } else {
+		      setBackground(list.getBackground());
+		      setForeground(list.getForeground());
+		    }
+		    return this;
 		}
 	}
 	
@@ -54,17 +83,18 @@ public class DishListView extends JPanel{
 		SearchPanel t3 = new SearchPanel();
 		tabbedPane.addTab("Dessert", t3);
 		
-		
-		insideScroll = new JPanel();
-		insideScroll.setLayout(new WrapLayout());
-		
-		for(int i = 0; i < 18; ++i) {
-			insideScroll.add(new Dish("Food " + (i + 1), "images/bakedbrie.jpg"));
-		}
-		
-		JScrollPane scroll = new JScrollPane(insideScroll);
-		scroll.setHorizontalScrollBarPolicy(ScrollPaneLayout.HORIZONTAL_SCROLLBAR_NEVER);
-			
+
+		DefaultListModel<Dish> model = new DefaultListModel<Dish>();
+
+		model.addElement(new Dish("food", 0, "images/icecream.jpg", "Nice food"));
+
+		JList<Dish> scroll = new JList<Dish>(model);
+		scroll.setDragEnabled(true);
+		scroll.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		scroll.setVisibleRowCount(-1);
+		scroll.setCellRenderer(new CellRenderer());
+		scroll.setTransferHandler(new DishTransferHandler());
+		scroll.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		this.setLayout(new BorderLayout());
 		this.add(tabbedPane, BorderLayout.NORTH);
 		this.add(scroll, BorderLayout.CENTER);
