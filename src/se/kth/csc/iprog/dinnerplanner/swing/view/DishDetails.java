@@ -9,6 +9,8 @@ import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
+import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
+import se.kth.csc.iprog.dinnerplanner.model.Dish;
 import se.kth.csc.iprog.dinnerplanner.model.Ingredient;
 import external.ScrollablePanel;
 import external.ScrollablePanel.ScrollableSizeHint;
@@ -18,9 +20,9 @@ import external.WrapLayout;
 public class DishDetails extends JPanel{
 	private static final long serialVersionUID = 1L;
 	
-	public static void OpenWindow(Set<Ingredient> Ingredients)
+	public static void OpenWindow(Dish dish)
 	{
-		DishDetails detailsForWindow = new DishDetails(Ingredients);
+		DishDetails detailsForWindow = new DishDetails(dish);
 		 JFrame frame = new JFrame("Simple GUI"); 
 		 //JLabel textLabel = new JLabel("I'm a label in the window",SwingConstants.CENTER);
 		 detailsForWindow.setPreferredSize(new Dimension(500, 500));
@@ -34,14 +36,15 @@ public class DishDetails extends JPanel{
 
 	}
 
-	public DishDetails(Set<Ingredient> Ingredients) {		
-		
+	private Dish activeDish;
+	public DishDetails(Dish dish) {		
+		activeDish = dish;
 		
 		
 		JPanel top = getTopPanel();
 		
 		JScrollPane left = getLeftPanel();
-		JScrollPane right = getRightPanel(Ingredients);
+		JScrollPane right = getRightPanel(dish.getIngredients());
 		
 		this.setLayout(new BorderLayout());
 
@@ -71,7 +74,7 @@ public class DishDetails extends JPanel{
 		JPanel top = new JPanel(new BorderLayout());
 		top.setMinimumSize(new Dimension(100, 100));
 		
-		ImageIcon image = new ImageIcon("images/bakedbrie.jpg");
+		ImageIcon image = new ImageIcon("images/"+ activeDish.getImage());
 		JLabel imgLabel = new JLabel("", image, JLabel.CENTER);
 		top.add(imgLabel, BorderLayout.WEST);
 		
@@ -84,8 +87,8 @@ public class DishDetails extends JPanel{
 	{
 		JPanel rightPanel = new JPanel();
 		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.PAGE_AXIS));
-		String completeDishString = "DishTitle";
-		String otherInfo = "$12.00 for 9999123123 people";
+		String completeDishString = activeDish.getName();
+		String otherInfo = "$" +  String.valueOf(activeDish.getPrice()) + " for 1 person";
 		JLabel dishInfo = new JLabel(completeDishString, JLabel.LEFT);
 		JLabel otherInfoLabel = new JLabel(otherInfo, JLabel.LEFT);
 		rightPanel.add(dishInfo);
@@ -101,7 +104,7 @@ public class DishDetails extends JPanel{
 		JScrollPane left = new JScrollPane();
 		left.setMinimumSize(new Dimension(100, 100));
 		
-		left.setViewportView(new JLabel("Dish preparattttttion"));
+		left.setViewportView(new JLabel(activeDish.getDescription()));
 		return left;
 	}
 	
