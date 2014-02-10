@@ -4,11 +4,14 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
 import external.WrapLayout;
 
 public class DinnerDishList extends JPanel {
 
 	private static final long serialVersionUID = 1L;
+	
+	private DinnerModel chosenModel;
 
 	public static class Element extends JPanel{
 		private static final long serialVersionUID = 1L;
@@ -31,5 +34,15 @@ public class DinnerDishList extends JPanel {
 		this.add(new Element("Fish"));
 		this.add(new Element("And"));
 		this.add(new Element("Stuff"));
+	}
+	
+	public void setDinnerModel(DinnerModel model)
+	{
+		this.chosenModel = model;
+	}
+	
+	public DinnerModel getDinnerModel()
+	{
+		return this.chosenModel;
 	}
 }

@@ -34,22 +34,8 @@ public class ListIngredients {
 	
 	public JScrollPane getTableForIngredients(Set<Ingredient> Ingredients)
 	{	
-		ArrayList<Ingredient> ingredientsToUseInList = new ArrayList<Ingredient>();
-		for(Ingredient newIngredient : Ingredients)
-		{
-			for(Ingredient existingIngredient : ingredientsToUseInList)
-			{
-				if(existingIngredient.getName() == newIngredient.getName())
-				{
-					existingIngredient.setQuantity(existingIngredient.getQuantity() + newIngredient.getQuantity());
-					existingIngredient.setPrice(existingIngredient.getPrice() + newIngredient.getPrice());
-					break;
-				}
-				ingredientsToUseInList.add(newIngredient);
-			}	
-		}
-		
-		final ArrayList<Ingredient> ingredientsForTable = ingredientsToUseInList;
+
+		final ArrayList<Ingredient> ingredientsForTable = new ArrayList<Ingredient>(Ingredients);		  
 		
 		      TableModel dataModel = new AbstractTableModel() {
 		          /**
@@ -65,14 +51,17 @@ public class ListIngredients {
 		        	  case 0:
 		        	  {
 		        		  stringToShow = ingredientForRow.getName();
+		        		  break;
 		        	  }
 		        	  case 1:
 		        	  {
 		        		  stringToShow = String.valueOf(ingredientForRow.getQuantity());
+		        		  break;
 		        	  }
 		        	  case 2:
 		        	  {
 		        		  stringToShow = String.valueOf(ingredientForRow.getPrice());
+		        		  break;
 		        	  }
 		        	  }
 		        	  return stringToShow; }
