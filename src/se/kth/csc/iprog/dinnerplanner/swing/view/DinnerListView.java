@@ -1,9 +1,11 @@
 package se.kth.csc.iprog.dinnerplanner.swing.view;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Set;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -18,6 +20,9 @@ import javax.swing.border.EmptyBorder;
 import se.kth.csc.iprog.dinnerplanner.model.Dish;
 
 import external.WrapLayout;
+
+import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
+import se.kth.csc.iprog.dinnerplanner.model.Ingredient;
 
 public class DinnerListView extends JPanel{
 
@@ -69,8 +74,31 @@ public class DinnerListView extends JPanel{
 		//Bottom - buttons
 		JPanel bottom = new JPanel();
 
-		bottom.add(new JButton("Preparation"));
-		bottom.add(new JButton("Ingredients"));
+		JButton preparation =new JButton("Preparation"); 
+		bottom.add(preparation);
+		JButton ingredients =new JButton("Ingredients"); 
+		bottom.add(ingredients);
+		
+		preparation.addActionListener(new ActionListener() {
+			  public void actionPerformed(ActionEvent evt) {
+			   System.out.println("want to POPPRESENTATION");
+			  }
+			});
+		ingredients.addActionListener(new ActionListener() {
+			  public void actionPerformed(ActionEvent evt) {
+				  
+				  DinnerModel dinnerModel = new DinnerModel();
+				  if(dinnerModel != null)
+				  {
+					  dinnerModel.tempSeedOfChoice();
+					  
+					  Set<Ingredient> allIngredients = dinnerModel.getAllIngredients();
+					   ListIngredients.OpenWindow(allIngredients);
+
+				  }
+			   System.out.println("want to Ingredients");
+			  }
+			});
 
 		this.add(bottom, BorderLayout.SOUTH);
 	}

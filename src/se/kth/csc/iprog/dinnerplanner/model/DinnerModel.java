@@ -8,7 +8,7 @@ public class DinnerModel implements IDinnerModel {
 	
 
 	Set<Dish> dishes = new HashSet<Dish>();
-	ArrayList<Dish> selectedDishes= new ArrayList<Dish>(3); 
+	ArrayList<Dish> selectedDishes = new ArrayList<Dish>(4); 
 	int _numberOfGuests = 0;
 	
 	/**
@@ -65,7 +65,7 @@ public class DinnerModel implements IDinnerModel {
 	}
 	
 	/**
-	 * Returns the set of dishes of specific type. (1 = starter, 2 = main, 3 = desert).
+	 * Returns the set of all dishes.
 	 */
 	public Set<Dish> getDishes(){
 		return dishes;
@@ -142,7 +142,29 @@ public class DinnerModel implements IDinnerModel {
 				}
 			}
 		}
-		return result;
+		
+        Set<Ingredient> ingredientsToUseInList = new HashSet<Ingredient>();
+        
+        for(Ingredient newIngredient : result)
+        {
+        	boolean exists = false;
+            for(Ingredient existingIngredient : ingredientsToUseInList)
+            {
+                if(existingIngredient.getName() == newIngredient.getName())
+                {
+                	exists = true;
+                    existingIngredient.setQuantity(existingIngredient.getQuantity() + newIngredient.getQuantity());
+                    existingIngredient.setPrice(existingIngredient.getPrice() + newIngredient.getPrice());
+                    break;
+                }
+            }   
+            if(exists==false)
+            {
+            	ingredientsToUseInList.add(newIngredient);
+            }
+        }
+
+		return ingredientsToUseInList;
 	}
 	
 	/**
@@ -158,6 +180,34 @@ public class DinnerModel implements IDinnerModel {
 		return totalPrice;
 	}
 	
+	// Add dish to currently selectd dishes!
+	public void selectDish(Dish dishToSelect)
+	{
+		for(int i=0;selectedDishes.size()>i;i++ ) {
+			if(selectedDishes.get(i).type == dishToSelect.type) {
+				selectedDishes.remove(i);
+			}
+		}
+		   
+
+		selectedDishes.add(dishToSelect);
+		System.out.println("Added dish!");
+	}
 	
+	
+	
+	//TEMPORARY THING
+	//#TODO remove
+	public void tempSeedOfChoice()
+	{
+		Set<Dish> allDishes = getDishes();
+		int i = 0;
+		for(Dish d : allDishes){
+			if(i > 2)
+				break;
+			selectDish(d);
+			}
+		System.out.println("Seeded!");
+	}
 
 }

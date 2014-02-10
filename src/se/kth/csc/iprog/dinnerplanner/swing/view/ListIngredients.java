@@ -3,7 +3,6 @@ package se.kth.csc.iprog.dinnerplanner.swing.view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.JFrame;
@@ -20,7 +19,7 @@ public class ListIngredients {
 	{
 		ListIngredients ingredientsInList = new ListIngredients();
 		JScrollPane tableToShow = ingredientsInList.getTableForIngredients(Ingredients);
-		 JFrame frame = new JFrame("Simple GUI"); 
+		 JFrame frame = new JFrame("Ingredients"); 
 		 //JLabel textLabel = new JLabel("I'm a label in the window",SwingConstants.CENTER);
 		tableToShow.setPreferredSize(new Dimension(500, 500));
 		tableToShow.setMinimumSize(new Dimension(100, 100));
@@ -34,22 +33,8 @@ public class ListIngredients {
 	
 	public JScrollPane getTableForIngredients(Set<Ingredient> Ingredients)
 	{	
-		ArrayList<Ingredient> ingredientsToUseInList = new ArrayList<Ingredient>();
-		for(Ingredient newIngredient : Ingredients)
-		{
-			for(Ingredient existingIngredient : ingredientsToUseInList)
-			{
-				if(existingIngredient.getName() == newIngredient.getName())
-				{
-					existingIngredient.setQuantity(existingIngredient.getQuantity() + newIngredient.getQuantity());
-					existingIngredient.setPrice(existingIngredient.getPrice() + newIngredient.getPrice());
-					break;
-				}
-				ingredientsToUseInList.add(newIngredient);
-			}	
-		}
-		
-		final ArrayList<Ingredient> ingredientsForTable = ingredientsToUseInList;
+
+		final ArrayList<Ingredient> ingredientsForTable = new ArrayList<Ingredient>(Ingredients);		  
 		
 		      TableModel dataModel = new AbstractTableModel() {
 		          /**
@@ -65,19 +50,25 @@ public class ListIngredients {
 		        	  case 0:
 		        	  {
 		        		  stringToShow = ingredientForRow.getName();
+		        		  break;
 		        	  }
 		        	  case 1:
 		        	  {
 		        		  stringToShow = String.valueOf(ingredientForRow.getQuantity());
+		        		  break;
 		        	  }
 		        	  case 2:
 		        	  {
 		        		  stringToShow = String.valueOf(ingredientForRow.getPrice());
+		        		  break;
 		        	  }
 		        	  }
 		        	  return stringToShow; }
 		      };
 		      JTable table = new JTable(dataModel);
+		      table.getColumnModel().getColumn(0).setHeaderValue("Ingredient");
+		      table.getColumnModel().getColumn(1).setHeaderValue("Quantity");
+		      table.getColumnModel().getColumn(2).setHeaderValue("Cost");
 		      JScrollPane scrollpane = new JScrollPane(table);
 		      return scrollpane;
 	}

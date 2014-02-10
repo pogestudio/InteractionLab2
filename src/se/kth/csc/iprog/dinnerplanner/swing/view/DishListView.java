@@ -6,13 +6,15 @@ import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Set;
 
 import javax.swing.*;
 
-import se.kth.csc.iprog.dinnerplanner.model.Dish;
-import se.kth.csc.iprog.dinnerplanner.model.Ingredient;
+import external.WrapLayout;
 
+import se.kth.csc.iprog.dinnerplanner.model.Dish;
+import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
 public class DishListView extends JPanel{
 	private static final long serialVersionUID = 1L;
 
@@ -38,14 +40,12 @@ public class DishListView extends JPanel{
 				@Override
 				public void actionPerformed(ActionEvent action) {
 					//TODO push some kind of data to dish details
-					DishDetails.OpenWindow(new HashSet<Ingredient>());
+					DishDetails.OpenWindow(null);
 				}
 			});
 			this.add(button, BorderLayout.CENTER);			
 			this.add(text, BorderLayout.SOUTH);
 		  }
-		
-		
 		
 		@Override
 		public Component getListCellRendererComponent(
@@ -54,7 +54,7 @@ public class DishListView extends JPanel{
 		
 			text.setText(value.getName());
 			
-			button.setIcon(new ImageIcon(value.getImage()));
+			button.setIcon(new ImageIcon("images/" + value.getImage()));
 			
 			setPreferredSize(new Dimension(150, 150));
 
@@ -69,25 +69,30 @@ public class DishListView extends JPanel{
 		}
 	}
 	
-	private JPanel insideScroll;
-	
-	public DishListView() {
-
-		JTabbedPane tabbedPane = new JTabbedPane();
-
-		//TODO: Change JTextField into a custom one for a nicer search box 
-		SearchPanel t1 = new SearchPanel();
-		tabbedPane.addTab("Starter", t1);
-		SearchPanel t2 = new SearchPanel();
-		tabbedPane.addTab("Main", t2);
-		SearchPanel t3 = new SearchPanel();
-		tabbedPane.addTab("Dessert", t3);
+	private JPanel createTabPanel(int type){
+		JPanel panel = new JPanel();
+		panel.setLayout(new BorderLayout());
 		
-
+		SearchPanel spanel = new SearchPanel();
+		JPanel ipanel = new JPanel();
+		ipanel.setLayout(new WrapLayout());
+		
+		JSeparator line = new JSeparator();
+		
+		JPanel slpanel = new JPanel();
+		slpanel.setLayout(new BorderLayout());
+		slpanel.add(spanel, BorderLayout.NORTH);
+		slpanel.add(line, BorderLayout.SOUTH);
+		
+		panel.add(slpanel, BorderLayout.NORTH);
+		
+	    ArrayList<Dish> dishList = getDishes(type);
+	    
 		DefaultListModel<Dish> model = new DefaultListModel<Dish>();
 
-		model.addElement(new Dish("food", 0, "images/icecream.jpg", "Nice food"));
-
+		for (Dish dish : dishList) {
+			model.addElement(dish);
+		}
 		JList<Dish> scroll = new JList<Dish>(model);
 		scroll.setDragEnabled(true);
 		scroll.setLayoutOrientation(JList.HORIZONTAL_WRAP);
@@ -95,12 +100,32 @@ public class DishListView extends JPanel{
 		scroll.setCellRenderer(new CellRenderer());
 		scroll.setTransferHandler(new DishTransferHandler());
 		scroll.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		this.setLayout(new BorderLayout());
-		this.add(tabbedPane, BorderLayout.NORTH);
-		this.add(scroll, BorderLayout.CENTER);
-		
-		
+		panel.add(scroll, BorderLayout.CENTER);
+		return panel;
 	}
 	
+	public DishListView() {
+		JTabbedPane tabbedPane = new JTabbedPane();
+		
+		JPanel t1 = createTabPanel(1);
+		tabbedPane.add("Starter", t1);
+		JPanel t2 = createTabPanel(2);
+		tabbedPane.add("Main", t2);
+		JPanel t3 = createTabPanel(3);
+		tabbedPane.add("Dessert", t3);
+			
+		this.setLayout(new BorderLayout());
+		this.add(tabbedPane, BorderLayout.CENTER);
+	}	
+	
+	private ArrayList<Dish> getDishes(int type){
+		DinnerModel model = new DinnerModel();
+		Set<se.kth.csc.iprog.dinnerplanner.model.Dish> dishSet = model.getDishesOfType(type);
+		ArrayList<Dish> dishNames = new ArrayList<Dish>();
+		for (se.kth.csc.iprog.dinnerplanner.model.Dish dish : dishSet){
+			dishNames.add(dish);
+		}
+		return dishNames;
+	}
 	
 }

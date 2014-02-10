@@ -1,13 +1,7 @@
 package se.kth.csc.iprog.dinnerplanner.swing.view;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.HashSet;
 
 import javax.swing.DropMode;
 import javax.swing.ImageIcon;
@@ -18,17 +12,16 @@ import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
-import javax.swing.TransferHandler;
 
 import se.kth.csc.iprog.dinnerplanner.model.Dish;
-import se.kth.csc.iprog.dinnerplanner.model.Ingredient;
-import se.kth.csc.iprog.dinnerplanner.swing.view.DishListView.CellRenderer;
 
-import external.WrapLayout;
+import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
 
 public class DinnerDishList extends JList<Dish> {
 
 	private static final long serialVersionUID = 1L;
+	
+	private DinnerModel chosenModel;
 
 	public static class CellRenderer extends JPanel implements ListCellRenderer<Dish> {
 		private static final long serialVersionUID = 1L;
@@ -76,5 +69,15 @@ public class DinnerDishList extends JList<Dish> {
 		setDragEnabled(true);
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		setTransferHandler(new DishTransferHandler());
+	}
+	
+	public void setDinnerModel(DinnerModel model)
+	{
+		this.chosenModel = model;
+	}
+	
+	public DinnerModel getDinnerModel()
+	{
+		return this.chosenModel;
 	}
 }

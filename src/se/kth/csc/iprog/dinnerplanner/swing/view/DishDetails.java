@@ -2,31 +2,27 @@ package se.kth.csc.iprog.dinnerplanner.swing.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.util.Set;
 
 import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
 
+import se.kth.csc.iprog.dinnerplanner.model.Dish;
 import se.kth.csc.iprog.dinnerplanner.model.Ingredient;
-import external.ScrollablePanel;
-import external.ScrollablePanel.ScrollableSizeHint;
-import external.WrapLayout;
-
 
 public class DishDetails extends JPanel{
 	private static final long serialVersionUID = 1L;
 	
-	public static void OpenWindow(Set<Ingredient> Ingredients)
+	public static void OpenWindow(Dish dish)
 	{
-		DishDetails detailsForWindow = new DishDetails(Ingredients);
-		 JFrame frame = new JFrame("Simple GUI"); 
+		DishDetails detailsForWindow = new DishDetails(dish);
+		 JFrame frame = new JFrame("Dish Details"); 
+		 
 		 //JLabel textLabel = new JLabel("I'm a label in the window",SwingConstants.CENTER);
 		 detailsForWindow.setPreferredSize(new Dimension(500, 500));
-		detailsForWindow.setMinimumSize(new Dimension(100, 100));
+		 detailsForWindow.setMinimumSize(new Dimension(100, 100));
 
-		 frame.getContentPane().add(detailsForWindow, BorderLayout.CENTER); 
+		 frame.getContentPane().add(detailsForWindow, BorderLayout.CENTER);
+		 
 		 //Display the window. 
 		 frame.setLocationRelativeTo(null); 
 		 frame.pack(); 
@@ -34,14 +30,15 @@ public class DishDetails extends JPanel{
 
 	}
 
-	public DishDetails(Set<Ingredient> Ingredients) {		
-		
+	private Dish activeDish;
+	public DishDetails(Dish dish) {		
+		activeDish = dish;
 		
 		
 		JPanel top = getTopPanel();
 		
 		JScrollPane left = getLeftPanel();
-		JScrollPane right = getRightPanel(Ingredients);
+		JScrollPane right = getRightPanel(dish.getIngredients());
 		
 		this.setLayout(new BorderLayout());
 
@@ -50,15 +47,15 @@ public class DishDetails extends JPanel{
 				left,
 				right);
 		
-		absoluteBottom.setResizeWeight(1.0);
-		absoluteBottom.setDividerLocation(0);
+		absoluteBottom.setResizeWeight(0.5);
+		//absoluteBottom.setDividerLocation(0.5);
 		
 		JSplitPane masterSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
 				top,
 				absoluteBottom);
 		
-		masterSplitPane.setResizeWeight(1.0);
-		masterSplitPane.setDividerLocation(0);
+		masterSplitPane.setResizeWeight(0.3);
+		//masterSplitPane.setDividerLocation(0);
 		
 		
 		this.add(masterSplitPane, BorderLayout.CENTER);
@@ -71,7 +68,7 @@ public class DishDetails extends JPanel{
 		JPanel top = new JPanel(new BorderLayout());
 		top.setMinimumSize(new Dimension(100, 100));
 		
-		ImageIcon image = new ImageIcon("images/bakedbrie.jpg");
+		ImageIcon image = new ImageIcon("images/"+ activeDish.getImage());
 		JLabel imgLabel = new JLabel("", image, JLabel.CENTER);
 		top.add(imgLabel, BorderLayout.WEST);
 		
@@ -84,8 +81,8 @@ public class DishDetails extends JPanel{
 	{
 		JPanel rightPanel = new JPanel();
 		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.PAGE_AXIS));
-		String completeDishString = "DishTitle";
-		String otherInfo = "$12.00 for 9999123123 people";
+		String completeDishString = activeDish.getName();
+		String otherInfo = "$" +  String.valueOf(activeDish.getPrice()) + " for 1 person";
 		JLabel dishInfo = new JLabel(completeDishString, JLabel.LEFT);
 		JLabel otherInfoLabel = new JLabel(otherInfo, JLabel.LEFT);
 		rightPanel.add(dishInfo);
@@ -101,7 +98,7 @@ public class DishDetails extends JPanel{
 		JScrollPane left = new JScrollPane();
 		left.setMinimumSize(new Dimension(100, 100));
 		
-		left.setViewportView(new JLabel("Dish preparattttttion"));
+		left.setViewportView(new JLabel(activeDish.getDescription()));
 		return left;
 	}
 	
