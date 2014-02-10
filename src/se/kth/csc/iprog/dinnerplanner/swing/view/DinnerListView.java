@@ -65,8 +65,9 @@ public class DinnerListView extends JPanel implements ChangeListener{
 		
 		
 		DefaultListModel<Dish> lmodel = new DefaultListModel<Dish>();
-		lmodel.addElement(new Dish("icecream", 0, "icecream.jpg", "Nice food"));
-	
+		for(Dish d : thaDinnerModel.getDishes()) {
+			lmodel.addElement(d);
+		}
 		
 		dishes = new DinnerDishList(lmodel);
 		dishes.setLayout(new WrapLayout());
