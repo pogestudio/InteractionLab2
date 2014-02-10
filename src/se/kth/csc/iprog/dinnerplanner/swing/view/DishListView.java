@@ -61,8 +61,10 @@ public class DishListView extends JPanel{
 		insideScroll = new JPanel();
 		insideScroll.setLayout(new WrapLayout());
 		
-		for(int i = 0; i < 18; ++i) {
-			insideScroll.add(new Dish("Food " + (i + 1), "images/bakedbrie.jpg"));
+		/** Only cares about dishes of type 1 **/
+		ArrayList<String> dishList = getDishes(1);
+		for (String dish : dishList) {
+			insideScroll.add(new Dish(dish, "images/bakedbrie.jpg"));
 		}
 		
 		JScrollPane scroll = new JScrollPane(insideScroll);
