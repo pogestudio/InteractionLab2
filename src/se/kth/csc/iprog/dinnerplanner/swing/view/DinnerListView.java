@@ -16,6 +16,8 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import se.kth.csc.iprog.dinnerplanner.model.Dish;
 
@@ -24,13 +26,17 @@ import external.WrapLayout;
 import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
 import se.kth.csc.iprog.dinnerplanner.model.Ingredient;
 
-public class DinnerListView extends JPanel{
+public class DinnerListView extends JPanel implements ChangeListener{
 
 	private static final long serialVersionUID = 1L;
 
 	private DinnerDishList dishes;
+	private DinnerModel thaDinnerModel;
+	private JLabel totalCostLabel;
 	
-	public DinnerListView() {
+	public DinnerListView () {
+		
+		thaDinnerModel = new DinnerModel();
 
 		this.setLayout(new BorderLayout());
 
@@ -43,9 +49,13 @@ public class DinnerListView extends JPanel{
 		SpinnerModel model = new SpinnerNumberModel(2, 1, 100, 1);
 		JSpinner numPeople = new JSpinner(model);
 		
+        numPeople.addChangeListener(this);
+		
 		top.add(numPeople);
 		top.add(new JLabel("Total cost: "));
-		top.add(new JLabel("$ 943.00"));
+		
+		totalCostLabel = new JLabel("$94300");
+		top.add(totalCostLabel);
 		
 		this.add(top, BorderLayout.NORTH);
 		
@@ -103,5 +113,17 @@ public class DinnerListView extends JPanel{
 		this.add(bottom, BorderLayout.SOUTH);
 	}
 	
+	public void stateChanged(ChangeEvent e)
+	{
+		JSpinner origSpinner = (JSpinner) e.getSource();
+		int value = (Integer) origSpinner.getValue();
+		thaDinnerModel.setNumberOfGuests(value);
+		updateCostLabel();
+	}
+	
+	public void updateCostLabel() {
+		float newCost = thaDinnerModel.getTotalMenuPrice();
+		totalCostLabel.setText("$" + String.valueOf(newCost));
+	}
 	
 }
