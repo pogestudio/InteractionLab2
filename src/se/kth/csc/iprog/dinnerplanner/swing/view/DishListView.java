@@ -1,15 +1,19 @@
 package se.kth.csc.iprog.dinnerplanner.swing.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.*;
 
+import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
 import se.kth.csc.iprog.dinnerplanner.model.Ingredient;
-
+import se.kth.csc.iprog.dinnerplanner.model.Dish;
 import external.WrapLayout;
 
 
@@ -42,35 +46,62 @@ public class DishListView extends JPanel{
 	
 	private JPanel insideScroll;
 	
-	public DishListView() {
-
-		JTabbedPane tabbedPane = new JTabbedPane();
-
-		//TODO: Change JTextField into a custom one for a nicer search box 
-		SearchPanel t1 = new SearchPanel();
-		tabbedPane.addTab("Starter", t1);
-		SearchPanel t2 = new SearchPanel();
-		tabbedPane.addTab("Main", t2);
-		SearchPanel t3 = new SearchPanel();
-		tabbedPane.addTab("Dessert", t3);
+	private JPanel createTabPanel(int type){
+		JPanel panel = new JPanel();
+		panel.setLayout(new BorderLayout());
 		
+		SearchPanel spanel = new SearchPanel();
+		JPanel ipanel = new JPanel();
+		ipanel.setLayout(new WrapLayout());
+		
+		JSeparator line = new JSeparator();
+		
+		JPanel slpanel = new JPanel();
+		slpanel.setLayout(new BorderLayout());
+		slpanel.add(spanel, BorderLayout.NORTH);
+		slpanel.add(line, BorderLayout.SOUTH);
+		
+		panel.add(slpanel, BorderLayout.NORTH);
+		panel.add(ipanel, BorderLayout.CENTER);
+		
+	    ArrayList<String> dishList = getDishes(type);
+		for (String dish : dishList) {
+			ipanel.add(new Dish(dish, "images/bakedbrie.jpg"));
+		}
+		
+		return panel;
+	}
+	
+	public DishListView() {
+		JTabbedPane tabbedPane = new JTabbedPane();
+		
+		//TODO: Change JTextField into a custom one for a nicer search box 
+
+		JPanel t1 = createTabPanel(1);
+		tabbedPane.add("Starter", t1);
+		JPanel t2 = createTabPanel(2);
+		tabbedPane.add("Main", t2);
+		JPanel t3 = createTabPanel(3);
+		tabbedPane.add("Dessert", t3);
 		
 		insideScroll = new JPanel();
 		insideScroll.setLayout(new WrapLayout());
-		
-		for(int i = 0; i < 18; ++i) {
-			insideScroll.add(new Dish("Food " + (i + 1), "images/bakedbrie.jpg"));
-		}
 		
 		JScrollPane scroll = new JScrollPane(insideScroll);
 		scroll.setHorizontalScrollBarPolicy(ScrollPaneLayout.HORIZONTAL_SCROLLBAR_NEVER);
 			
 		this.setLayout(new BorderLayout());
-		this.add(tabbedPane, BorderLayout.NORTH);
-		this.add(scroll, BorderLayout.CENTER);
-		
-		
-	}
+		this.add(tabbedPane, BorderLayout.CENTER);
+	}	
 	
+	private ArrayList<String> getDishes(int type){
+		DinnerModel model = new DinnerModel();
+		Set<se.kth.csc.iprog.dinnerplanner.model.Dish> dishSet = model.getDishesOfType(type);
+		ArrayList<String> dishNames = new ArrayList<String>();
+		for (se.kth.csc.iprog.dinnerplanner.model.Dish dish : dishSet){
+			dishNames.add(dish.getName());
+		}
+		return dishNames;
+	}
 	
 }
