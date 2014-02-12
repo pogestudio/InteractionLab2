@@ -5,6 +5,9 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Insets;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.DropMode;
@@ -25,6 +28,9 @@ import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
 public class DinnerDishList extends JList {
 
 	private static final long serialVersionUID = 1L;
+	private static JButton testbutton;
+	private static JPanel testpanel;
+	
 	
 	private DinnerModel chosenModel;
 
@@ -48,10 +54,19 @@ public class DinnerDishList extends JList {
 		    image.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 		    
 		    button = new JButton("X");
+		    testbutton = button;
+		    testpanel = this;
 		    add(text);
 			this.add(image);			
 			this.add(text);		
 			this.add(button);
+			
+			this.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent event) {
+					System.out.println("ASDASDF");
+				}
+			});
 		  }
 		
 		@Override
@@ -81,6 +96,12 @@ public class DinnerDishList extends JList {
 		setDragEnabled(false);
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		setTransferHandler(new DishReceiverHandler());
+		addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent event) {
+				clickButton(event.getPoint());
+			}
+		});
 	}
 	
 	public void setDinnerModel(DinnerModel model)
@@ -91,5 +112,20 @@ public class DinnerDishList extends JList {
 	public DinnerModel getDinnerModel()
 	{
 		return this.chosenModel;
+	}
+	
+	private void clickButton(Point point) {
+	    int index = locationToIndex(point);
+		
+		Object o = getModel().getElementAt(index);
+	
+		point.y -= testpanel.getBounds().height * index;
+		
+		index = 32;		
+		System.out.println(point.x + ", " + point.y + " : " + index);
+
+		System.out.println(testpanel.getHeight());
+		System.out.println(testpanel.getPreferredSize().height);
+		System.out.println(testbutton.getBounds());
 	}
 }
