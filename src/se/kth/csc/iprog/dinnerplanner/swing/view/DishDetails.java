@@ -6,6 +6,8 @@ import java.util.Set;
 
 import javax.swing.*;
 
+import external.WrapLayout;
+
 import se.kth.csc.iprog.dinnerplanner.model.Dish;
 import se.kth.csc.iprog.dinnerplanner.model.Ingredient;
 
@@ -95,10 +97,13 @@ public class DishDetails extends JPanel{
 	
 	JScrollPane getLeftPanel()
 	{
-		JScrollPane left = new JScrollPane();
+		JTextArea text =  new JTextArea (activeDish.getDescription());
+		text.setWrapStyleWord(true);
+		text.setLineWrap(true);
+		text.setEditable(false);
+		JScrollPane left = new JScrollPane(text);
 		left.setMinimumSize(new Dimension(100, 100));
 		
-		left.setViewportView(new JLabel(activeDish.getDescription()));
 		return left;
 	}
 	
