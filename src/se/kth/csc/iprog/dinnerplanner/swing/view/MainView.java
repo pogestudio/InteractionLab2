@@ -36,7 +36,7 @@ public class MainView extends JPanel {
 				dishes,
 				dinnerListView);
 		
-		split.setResizeWeight(0.45);
+		split.setResizeWeight(0.44);
 		//split.setDividerLocation(150);
 		
 		this.add(split, BorderLayout.CENTER);
