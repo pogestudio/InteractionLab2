@@ -3,6 +3,7 @@ package se.kth.csc.iprog.dinnerplanner.swing.view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.JEditorPane;
@@ -72,9 +73,15 @@ public class DinnerPrepView extends JPanel {
 		contentString = desc;
 	}
 
+
 	private ArrayList<String> getDesc(DinnerModel dm, int type){
 		ArrayList<Dish> uniqueDishList = new ArrayList<Dish>();
-		Set<Dish> starters = dm.getDishesOfType(type);
+		Dish sel_dish = dm.getSelectedDish(type);
+		
+		System.out.println("dish - " + sel_dish);
+		Set<Dish> dishList = new HashSet<Dish>();
+		dishList.add(sel_dish);
+
 		ArrayList<String> list = new ArrayList<String>();
 
 		String mealtype = "";
@@ -88,8 +95,9 @@ public class DinnerPrepView extends JPanel {
 			mealtype = "Desert: ";
 
 		}
-		for (Dish dish : starters) {
-			if(!uniqueDishList.contains(dish)){
+		for (Dish dish : dishList) {
+			if(dish != null && !uniqueDishList.contains(dish)){
+				
 				list.add("<b>" + mealtype + dish.getName() + "</b>" + "<br> " + dish.getDescription());
 				uniqueDishList.add(dish);
 			}
