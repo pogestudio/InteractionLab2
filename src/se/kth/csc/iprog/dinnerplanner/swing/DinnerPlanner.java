@@ -1,5 +1,7 @@
 package se.kth.csc.iprog.dinnerplanner.swing;
 
+import java.awt.Dimension;
+
 import javax.swing.JFrame;
 
 import se.kth.csc.iprog.dinnerplanner.model.*;
@@ -42,6 +44,9 @@ public class DinnerPlanner extends JFrame {
 		dinnerPlanner.setVisible(true);
 
 		dinnerPlanner.setSize(800, 500);
+		dinnerPlanner.setPreferredSize(new Dimension(800,500));
+		dinnerPlanner.setMinimumSize(new Dimension(800,500));
+		
 
 	}
 

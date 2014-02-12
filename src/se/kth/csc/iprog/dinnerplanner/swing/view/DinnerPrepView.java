@@ -73,6 +73,7 @@ public class DinnerPrepView extends JPanel {
 	}
 
 	private ArrayList<String> getDesc(DinnerModel dm, int type){
+		ArrayList<Dish> uniqueDishList = new ArrayList<Dish>();
 		Set<Dish> starters = dm.getDishesOfType(type);
 		ArrayList<String> list = new ArrayList<String>();
 
@@ -88,7 +89,10 @@ public class DinnerPrepView extends JPanel {
 
 		}
 		for (Dish dish : starters) {
-			list.add("<b>" + mealtype + dish.getName() + "</b>" + "<br> " + dish.getDescription());
+			if(!uniqueDishList.contains(dish)){
+				list.add("<b>" + mealtype + dish.getName() + "</b>" + "<br> " + dish.getDescription());
+				uniqueDishList.add(dish);
+			}
 		}
 		return list;
 	}

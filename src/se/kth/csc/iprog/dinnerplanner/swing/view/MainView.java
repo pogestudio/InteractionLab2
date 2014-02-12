@@ -2,6 +2,7 @@ package se.kth.csc.iprog.dinnerplanner.swing.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridBagLayout;
 
 import javax.swing.*;
 
@@ -29,12 +30,13 @@ public class MainView extends JPanel {
 		dishes.setMinimumSize(new Dimension(500, 50));
 		
 		dinnerListView = new DinnerListView(); 
+		dinnerListView.setPreferredSize(new Dimension(100,50));
 				
 		split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
 				dishes,
 				dinnerListView);
 		
-		split.setResizeWeight(0.3);
+		split.setResizeWeight(0.44);
 		//split.setDividerLocation(150);
 		
 		this.add(split, BorderLayout.CENTER);
