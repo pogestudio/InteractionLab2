@@ -1,8 +1,12 @@
 package se.kth.csc.iprog.dinnerplanner.swing.view;
 
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Insets;
 
+import javax.swing.BorderFactory;
 import javax.swing.DropMode;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -12,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.EmptyBorder;
 
 import se.kth.csc.iprog.dinnerplanner.model.Dish;
 
@@ -27,6 +32,7 @@ public class DinnerDishList extends JList {
 		private static final long serialVersionUID = 1L;
 
 		private JLabel text;
+		private JLabel image;
 		JButton button;
 		ImageIcon icon;
 		
@@ -36,10 +42,16 @@ public class DinnerDishList extends JList {
 			this.setLayout(new FlowLayout());
 			
 		    text = new JLabel("errororoeroeroeror", JLabel.CENTER);
+		    text.setPreferredSize(new Dimension(100, 60));
+		    image = new JLabel("",JLabel.LEFT);
+		    image.setPreferredSize(new Dimension(80, 60));
+		    image.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+		    
+		    button = new JButton("X");
 		    add(text);
-			this.add(new JButton("asdf"));			
+			this.add(image);			
 			this.add(text);		
-			this.add(new JButton("delete"));
+			this.add(button);
 		  }
 		
 		@Override
@@ -48,7 +60,7 @@ public class DinnerDishList extends JList {
 				boolean isSelected, boolean cellHasFocus) {
 		
 			text.setText(((Dish)value).getName());
-			
+			image.setIcon(new ImageIcon("images/"+((Dish)value).getImage()));
 
 		    if (isSelected) {
 		      setBackground(list.getSelectionBackground());
