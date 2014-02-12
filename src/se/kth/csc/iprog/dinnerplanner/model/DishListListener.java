@@ -31,6 +31,8 @@ public class DishListListener implements ListDataListener {
 	    	System.out.println("intervalRemoved: " + e.getIndex0() +
 	                   ", " + e.getIndex1());
 	    	
+	    	Object o = e.getSource();
+	    	
 	    	Dish deletedDish = (Dish) dinnerList.getElementAt(e.getIndex0());
 	    	thaDinnerModel.deleteDish(deletedDish);
 	    	thaDinnerModel.printAllDishes();
