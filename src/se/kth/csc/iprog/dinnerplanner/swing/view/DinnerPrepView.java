@@ -79,6 +79,9 @@ public class DinnerPrepView extends JPanel {
 		Dish sel_dish = dm.getSelectedDish(type);
 		
 		System.out.println("dish - " + sel_dish);
+		
+		// Unnecessary Set but it's here since I thought that we could have
+		// multiple dishes for a dish type which is not the case 
 		Set<Dish> dishList = new HashSet<Dish>();
 		dishList.add(sel_dish);
 
