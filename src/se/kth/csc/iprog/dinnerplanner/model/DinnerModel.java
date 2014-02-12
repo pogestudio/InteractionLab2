@@ -7,7 +7,7 @@ import java.util.Set;
 public class DinnerModel implements IDinnerModel {
 
 	Set<Dish> dishes = new HashSet<Dish>();
-	ArrayList<Dish> selectedDishes = new ArrayList<Dish>(4);
+	ArrayList<Dish> selectedDishes;
 	int _numberOfGuests = 0;
 
 	/**
@@ -102,6 +102,10 @@ public class DinnerModel implements IDinnerModel {
 		dish5.addIngredient(dish5ing1);
 		dish5.addIngredient(dish5ing2);
 		dishes.add(dish5);
+		
+		selectedDishes = new ArrayList<Dish>(4);
+		for(int i = 0; i < 5; i++)
+			selectedDishes.add(null);
 	}
 
 	/**
@@ -214,13 +218,14 @@ public class DinnerModel implements IDinnerModel {
 
 	// Add dish to currently selectd dishes!
 	public void selectDish(Dish dishToSelect) {
-		for (int i = 0; selectedDishes.size() > i; i++) {
-			if (selectedDishes.get(i).type == dishToSelect.type) {
-				selectedDishes.remove(i);
+		/*for (int i = 0; selectedDishes.size() > i; i++) {
+			Dish d = selectedDishes.get(i);
+			if (d != null && d.type == dishToSelect.type) {
+				selectedDishes.set(i, null);
 			}
-		}
+		}*/
 
-		selectedDishes.add(dishToSelect);
+		selectedDishes.set(dishToSelect.type - 1, dishToSelect);
 		System.out.println("Added dish!");
 	}
 
