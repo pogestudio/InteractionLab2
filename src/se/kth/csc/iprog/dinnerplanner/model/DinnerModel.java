@@ -63,19 +63,19 @@ public class DinnerModel implements IDinnerModel {
 		dishes.add(dish2);
 		
 		
-		Dish dish3 = new Dish("Baked Brie",Dish.MAIN,"bakedbrie.jpg","Preheat an oven to 400 degrees F (200 degrees C). Place the beef into a mixing bowl, and season with salt, onion, garlic salt, Italian seasoning, oregano, red pepper flakes, hot pepper sauce, and Worcestershire sauce; mix well. Add the milk, Parmesan cheese, and bread crumbs. Mix until evenly blended, then form into 1 1/2-inch meatballs, and place onto a baking sheet. Bake in the preheated oven until no longer pink in the center, 20 to 25 minutes.");
+		Dish dish3 = new Dish("Baked Brie",Dish.DESERT,"bakedbrie.jpg","Preheat an oven to 400 degrees F (200 degrees C). Place the beef into a mixing bowl, and season with salt, onion, garlic salt, Italian seasoning, oregano, red pepper flakes, hot pepper sauce, and Worcestershire sauce; mix well. Add the milk, Parmesan cheese, and bread crumbs. Mix until evenly blended, then form into 1 1/2-inch meatballs, and place onto a baking sheet. Bake in the preheated oven until no longer pink in the center, 20 to 25 minutes.");
 		Ingredient dish3ing1 = new Ingredient("Brie",115,"g",20);
 		dish3.addIngredient(dish3ing1);
 		dishes.add(dish3);
 		
-		Dish dish4 = new Dish("Ice cream",Dish.MAIN,"icecream.jpg","Preheat an oven to 400 degrees F (200 degrees C). Place the beef into a mixing bowl, and season with salt, onion, garlic salt, Italian seasoning, oregano, red pepper flakes, hot pepper sauce, and Worcestershire sauce; mix well. Add the milk, Parmesan cheese, and bread crumbs. Mix until evenly blended, then form into 1 1/2-inch meatballs, and place onto a baking sheet. Bake in the preheated oven until no longer pink in the center, 20 to 25 minutes.");
+		Dish dish4 = new Dish("Ice cream",Dish.DESERT,"icecream.jpg","Preheat an oven to 400 degrees F (200 degrees C). Place the beef into a mixing bowl, and season with salt, onion, garlic salt, Italian seasoning, oregano, red pepper flakes, hot pepper sauce, and Worcestershire sauce; mix well. Add the milk, Parmesan cheese, and bread crumbs. Mix until evenly blended, then form into 1 1/2-inch meatballs, and place onto a baking sheet. Bake in the preheated oven until no longer pink in the center, 20 to 25 minutes.");
 		Ingredient dish4ing1 = new Ingredient("Ice",115,"g",20);
 		Ingredient dish4ing2 = new Ingredient("Cream",115,"g",20);
 		dish4.addIngredient(dish4ing1);
 		dish4.addIngredient(dish4ing2);
 		dishes.add(dish4);
 		
-		Dish dish5 = new Dish("Sour dough",Dish.MAIN,"sourdough.jpg","Preheat an oven to 400 degrees F (200 degrees C). Place the beef into a mixing bowl, and season with salt, onion, garlic salt, Italian seasoning, oregano, red pepper flakes, hot pepper sauce, and Worcestershire sauce; mix well. Add the milk, Parmesan cheese, and bread crumbs. Mix until evenly blended, then form into 1 1/2-inch meatballs, and place onto a baking sheet. Bake in the preheated oven until no longer pink in the center, 20 to 25 minutes.");
+		Dish dish5 = new Dish("Sour dough",Dish.STARTER,"sourdough.jpg","Preheat an oven to 400 degrees F (200 degrees C). Place the beef into a mixing bowl, and season with salt, onion, garlic salt, Italian seasoning, oregano, red pepper flakes, hot pepper sauce, and Worcestershire sauce; mix well. Add the milk, Parmesan cheese, and bread crumbs. Mix until evenly blended, then form into 1 1/2-inch meatballs, and place onto a baking sheet. Bake in the preheated oven until no longer pink in the center, 20 to 25 minutes.");
 		Ingredient dish5ing1 = new Ingredient("Sour powder",115,"g",20);
 		Ingredient dish5ing2 = new Ingredient("Dough",115,"g",20);
 		dish5.addIngredient(dish5ing1);
