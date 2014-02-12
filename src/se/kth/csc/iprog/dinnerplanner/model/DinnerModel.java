@@ -208,10 +208,16 @@ public class DinnerModel implements IDinnerModel {
 	 * Returns the total price of the menu (all the ingredients multiplied by number of guests).
 	 */
 	public float getTotalMenuPrice() {
-		Set<Ingredient> allIngredients = getAllIngredients();
+		/*Set<Ingredient> allIngredients = getAllIngredients();
 		float totalPrice = 0;
 		for (Ingredient i : allIngredients) {
 			totalPrice += i.getPrice() * getNumberOfGuests();
+		}
+		return totalPrice;*/
+		float totalPrice = 0;
+		for(Dish d : selectedDishes) {
+			if(d != null)
+				totalPrice += d.getPrice() * getNumberOfGuests();
 		}
 		return totalPrice;
 	}
@@ -231,11 +237,9 @@ public class DinnerModel implements IDinnerModel {
 
 	// Add dish to currently selectd dishes!
 	public void deleteDish(Dish dishToDelete) {
-		for (Dish d : selectedDishes) {
-			if (d == dishToDelete) {
-				selectedDishes.remove(dishToDelete);
-			}
-		}
+		
+		if(selectedDishes.get(dishToDelete.type - 1) == dishToDelete);
+			selectedDishes.set(dishToDelete.type - 1, null);
 		System.out.println("Removed dish");
 	}
 
@@ -243,7 +247,8 @@ public class DinnerModel implements IDinnerModel {
 	public void printAllDishes() {
 		System.out.println("WANT TODOPRINT TIDSHES");
 		for (Dish d : selectedDishes) {
-			System.out.println("dish:: dish" + d.getName());
+			if(d != null)
+				System.out.println("dish:: dish" + d.getName());
 		}
 
 	}
@@ -254,7 +259,7 @@ public class DinnerModel implements IDinnerModel {
 		Set<Dish> allDishes = getDishes();
 		int i = 0;
 		for (Dish d : allDishes) {
-			if (i > 2)
+			if (d != null && i > 2)
 				break;
 			selectDish(d);
 		}

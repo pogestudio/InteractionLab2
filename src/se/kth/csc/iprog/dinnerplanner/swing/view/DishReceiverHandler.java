@@ -56,7 +56,6 @@ public class DishReceiverHandler extends TransferHandler {
         }
         addIndex = index;
         
-        
 
         try{
             Object[] values = (Object[])info.getTransferable().getTransferData(localObjectFlavor);
@@ -69,20 +68,23 @@ public class DishReceiverHandler extends TransferHandler {
                 for(int j = 0; j < dinner.getSize(); ++j) {
                 	Dish d2 = (Dish)dinner.get(j);
                 	if(d2.getType() == d.getType()) {
+
+                    	((DinnerDishList)target).onRemoved(d2);
                 		dinner.remove(j);
                 		break;
                 	}
                 }
+                if(idx > dinner.getSize())
+                	idx = dinner.getSize();
+
+            	((DinnerDishList)target).onAdd(d);
+               	listModel.add(idx, values[i]);
+               	target.addSelectionInterval(idx, idx);
                 }
                 catch(Exception e) {
                 	e.printStackTrace();
                 }
                 
-                if(idx > dinner.getSize())
-                	idx = dinner.getSize();
-
-               	listModel.add(idx, values[i]);
-               	target.addSelectionInterval(idx, idx);
                
             }
             addCount = target.equals(source) ? values.length : 0;
@@ -91,6 +93,9 @@ public class DishReceiverHandler extends TransferHandler {
             ufe.printStackTrace();
         }catch(IOException ioe) {
             ioe.printStackTrace();
+        }finally{
+        	((DinnerDishList)target).onChange();
+        	target.repaint();
         }
         return false;
 	}

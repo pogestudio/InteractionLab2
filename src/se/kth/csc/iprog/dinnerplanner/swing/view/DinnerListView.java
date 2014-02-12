@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.util.Set;
 
 import javax.swing.DefaultListModel;
@@ -18,6 +19,8 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
 
 import se.kth.csc.iprog.dinnerplanner.model.Dish;
 
@@ -26,6 +29,7 @@ import external.WrapLayout;
 import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
 import se.kth.csc.iprog.dinnerplanner.model.DishListListener;
 import se.kth.csc.iprog.dinnerplanner.model.Ingredient;
+import se.kth.csc.iprog.dinnerplanner.swing.view.DinnerDishList.DinnerListListener;
 
 public class DinnerListView extends JPanel implements ChangeListener{
 
@@ -63,8 +67,7 @@ public class DinnerListView extends JPanel implements ChangeListener{
 		//Middle - list
 		JPanel middle = new JPanel();
 		middle.setLayout(new BorderLayout());
-		
-		
+	
 		
 		DefaultListModel lmodel = new DefaultListModel();
 		for(Dish d : thaDinnerModel.getFullMenu()) {
@@ -74,10 +77,21 @@ public class DinnerListView extends JPanel implements ChangeListener{
 		DishListListener dishListener = new DishListListener();
 		dishListener.setDinnerList(lmodel);
 		dishListener.setThaDinnerModel(thaDinnerModel);
-		lmodel.addListDataListener(dishListener);
-		
+		//lmodel.addListDataListener(dishListener);
+
 		dishes = new DinnerDishList(lmodel);
 		dishes.setLayout(new WrapLayout());
+		dishes.addListener(dishListener);
+			dishes.addListener(new DinnerListListener() {
+			@Override
+			public void onChanged() {
+				updateCostLabel();
+			}
+			@Override
+			public void onAdded(Dish dish) {}
+			@Override
+			public void onRemoved(Dish dish) {}
+		});
 		JLabel title = new JLabel("Dinner menu", JLabel.CENTER);
 		title.setFont(new Font(title.getFont().getName(), Font.PLAIN, 30));
 		middle.add(title, BorderLayout.NORTH);
@@ -122,12 +136,16 @@ public class DinnerListView extends JPanel implements ChangeListener{
 			});
 
 		this.add(bottom, BorderLayout.SOUTH);
+        onNumPeopleChanged(numPeople);
 	}
 	
-	public void stateChanged(ChangeEvent e)
-	{
-		JSpinner origSpinner = (JSpinner) e.getSource();
-		int value = (Integer) origSpinner.getValue();
+	@Override
+	public void stateChanged(ChangeEvent e) {
+		onNumPeopleChanged((JSpinner)e.getSource());
+	}
+
+	public void onNumPeopleChanged(JSpinner spinner) {
+		int value = (Integer) spinner.getValue();
 		thaDinnerModel.setNumberOfGuests(value);
 		updateCostLabel();
 		this.dishes.updateNumberOfPeople(value);

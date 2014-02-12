@@ -6,35 +6,28 @@ import javax.swing.DefaultListModel;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
+import se.kth.csc.iprog.dinnerplanner.swing.view.DinnerDishList.DinnerListListener;
 
-public class DishListListener implements ListDataListener {
+
+public class DishListListener implements DinnerListListener {
 	
 	private DinnerModel thaDinnerModel;
 	private DefaultListModel dinnerList;
 
-	    public void contentsChanged(ListDataEvent e) {
-	        System.out.println("contentsChanged: " + e.getIndex0() +
-	                   ", " + e.getIndex1());
-	         
-	        
+	    public void onChanged() {
 	    }
-	    public void intervalAdded(ListDataEvent e) {
-	    	System.out.println("intervalAdded: " + e.getIndex0() +
-	                   ", " + e.getIndex1());
+	    
+	    public void onAdded(Dish d) {
+	    	System.out.println("dish added: " + d.getName());
 	    	
-	    	Dish addedDish = (Dish) dinnerList.getElementAt(e.getIndex0());
-	    	thaDinnerModel.selectDish(addedDish);
+	    	thaDinnerModel.selectDish(d);
 	    	thaDinnerModel.printAllDishes();
 	    	
 	    }
-	    public void intervalRemoved(ListDataEvent e) {
-	    	System.out.println("intervalRemoved: " + e.getIndex0() +
-	                   ", " + e.getIndex1());
+	    public void onRemoved(Dish d) {
+	    	System.out.println("dish removed: " + d.getName());
 	    	
-	    	Object o = e.getSource();
-	    	
-	    	Dish deletedDish = (Dish) dinnerList.getElementAt(e.getIndex0());
-	    	thaDinnerModel.deleteDish(deletedDish);
+	    	thaDinnerModel.deleteDish(d);
 	    	thaDinnerModel.printAllDishes();
 	    }
 		public DinnerModel getThaDinnerModel() {

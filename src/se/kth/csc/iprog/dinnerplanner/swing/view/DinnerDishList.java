@@ -8,6 +8,9 @@ import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -34,6 +37,30 @@ public class DinnerDishList extends JList {
 	private static JLabel testimage;
 	private static int numberOfPeople = 1;
 	
+	public interface DinnerListListener {
+		void onChanged();
+		void onAdded(Dish dish);
+		void onRemoved(Dish dish);
+	}
+	
+	private ArrayList<DinnerListListener> listeners;
+
+	protected void onChange() {
+		for(DinnerListListener l : listeners)
+			l.onChanged();
+	}
+	protected void onAdd(Dish dish) {
+		for(DinnerListListener l : listeners)
+			l.onAdded(dish);
+	}
+	protected void onRemoved(Dish dish) {
+		for(DinnerListListener l : listeners)
+			l.onRemoved(dish);
+	}
+	
+	public void addListener(DinnerListListener listener) {
+		listeners.add(listener);
+	}
 	
 	private DinnerModel chosenModel;
 
@@ -88,6 +115,7 @@ public class DinnerDishList extends JList {
 
 	public DinnerDishList(DefaultListModel model) {
 		super(model);
+	    listeners = new ArrayList<DinnerListListener>();
 
 		setCellRenderer(new CellRenderer());
 		setDropMode(DropMode.INSERT);
@@ -101,6 +129,7 @@ public class DinnerDishList extends JList {
 			}
 		});
 	}
+	
 	
 	public void setDinnerModel(DinnerModel model)
 	{
@@ -121,6 +150,8 @@ public class DinnerDishList extends JList {
 		point.y -= testpanel.getPreferredSize().height * index;
 		
 		if(testbutton.getBounds().inside(point.x, point.y)) {
+			onRemoved((Dish)m.getElementAt(index));
+			onChange();
 			m.remove(index);
 		}
 		if(testimage.getBounds().inside(point.x, point.y)) {
@@ -133,4 +164,5 @@ public class DinnerDishList extends JList {
 		
 		this.repaint();
 	}
+
 }
