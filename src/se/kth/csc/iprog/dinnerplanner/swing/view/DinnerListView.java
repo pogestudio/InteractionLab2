@@ -130,6 +130,7 @@ public class DinnerListView extends JPanel implements ChangeListener{
 		int value = (Integer) origSpinner.getValue();
 		thaDinnerModel.setNumberOfGuests(value);
 		updateCostLabel();
+		this.dishes.updateNumberOfPeople(value);
 	}
 	
 	public void updateCostLabel() {

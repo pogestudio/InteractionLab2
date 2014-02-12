@@ -32,6 +32,7 @@ public class DinnerDishList extends JList {
 	private static JButton testbutton;
 	private static JPanel testpanel;
 	private static JLabel testimage;
+	private static int numberOfPeople = 1;
 	
 	
 	private DinnerModel chosenModel;
@@ -70,7 +71,8 @@ public class DinnerDishList extends JList {
 				JList list, Object value, int index,
 				boolean isSelected, boolean cellHasFocus) {
 		
-			text.setText(((Dish)value).getName());
+			Dish dish = (Dish)value;
+			text.setText("<html>" + dish.getName() + "<br>Cost: $" + dish.getPrice() * numberOfPeople + "</html>");
 			image.setIcon(new ImageIcon("images/"+((Dish)value).getImage()));
 
 		    if (isSelected) {
@@ -124,5 +126,11 @@ public class DinnerDishList extends JList {
 		if(testimage.getBounds().inside(point.x, point.y)) {
 			DishDetails.OpenWindow((Dish)m.getElementAt(index));
 		}
+	}
+	
+	public void updateNumberOfPeople(int numberOfPeople) {
+		DinnerDishList.numberOfPeople = numberOfPeople;
+		
+		this.repaint();
 	}
 }
