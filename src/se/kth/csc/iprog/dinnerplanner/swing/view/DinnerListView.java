@@ -103,12 +103,11 @@ public class DinnerListView extends JPanel implements ChangeListener{
 		ingredients.addActionListener(new ActionListener() {
 			  public void actionPerformed(ActionEvent evt) {
 				  
-				  DinnerModel dinnerModel = new DinnerModel();
-				  if(dinnerModel != null)
+				   if(thaDinnerModel != null)
 				  {
-					  dinnerModel.tempSeedOfChoice();
+					  //thaDinnerModel.tempSeedOfChoice();
 					  
-					  Set<Ingredient> allIngredients = dinnerModel.getAllIngredients();
+					  Set<Ingredient> allIngredients = thaDinnerModel.getAllIngredients();
 					   ListIngredients.OpenWindow(allIngredients);
 
 				  }
