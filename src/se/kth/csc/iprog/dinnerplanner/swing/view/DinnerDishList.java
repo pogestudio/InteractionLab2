@@ -66,9 +66,9 @@ public class DinnerDishList extends JList {
 
 		setCellRenderer(new CellRenderer());
 		setDropMode(DropMode.INSERT);
-		setDragEnabled(true);
+		setDragEnabled(false);
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		setTransferHandler(new DishTransferHandler(true));
+		setTransferHandler(new DishReceiverHandler());
 	}
 	
 	public void setDinnerModel(DinnerModel model)

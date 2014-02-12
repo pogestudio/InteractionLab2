@@ -12,19 +12,18 @@ import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.TransferHandler;
 
-public class DishTransferHandler extends TransferHandler {
+public class DishSenderHandler extends TransferHandler {
 	private static final long serialVersionUID = 1L;
     private final DataFlavor localObjectFlavor;
     private JList source;
     private int[] indices;
     private int addIndex = -1; //Location where items were added
     private int addCount; //Number of items added.
-    private boolean remove;
-    
-    public DishTransferHandler(boolean remove) {
+  
+    public DishSenderHandler() {
         super();
         localObjectFlavor = new ActivationDataFlavor(Object[].class, DataFlavor.javaJVMLocalObjectMimeType, "Array of items");
-        this.remove = remove;
+
     }
 	@Override
 	protected Transferable createTransferable(JComponent c) {
@@ -36,37 +35,8 @@ public class DishTransferHandler extends TransferHandler {
 	
 	@Override
 	public boolean importData(TransferSupport info) {
-	    if(!canImport(info)) {
-            return false;
-        }
-        JList target = (JList)info.getComponent();
-        JList.DropLocation dl = (JList.DropLocation)info.getDropLocation();
-        DefaultListModel listModel = (DefaultListModel)target.getModel();
-        int index = dl.getIndex();
-        //boolean insert = dl.isInsert();
-        int max = listModel.getSize();
-        if(index<0 || index>max) {
-            index = max;
-        }
-        addIndex = index;
 
-        try{
-            Object[] values = (Object[])info.getTransferable().getTransferData(localObjectFlavor);
-            for(int i=0;i<values.length;i++) {
-                int idx = index++;
-                listModel.add(idx, values[i]);
-                target.addSelectionInterval(idx, idx);
-                if(remove) {
-                	
-                }
-            }
-            addCount = target.equals(source) ? values.length : 0;
-            return true;
-        }catch(UnsupportedFlavorException ufe) {
-            ufe.printStackTrace();
-        }catch(IOException ioe) {
-            ioe.printStackTrace();
-        }
+  
         return false;
 	}
 	
@@ -75,6 +45,6 @@ public class DishTransferHandler extends TransferHandler {
     }
     
     @Override public boolean canImport(TransferSupport info) {
-        return info.isDrop() && info.isDataFlavorSupported(localObjectFlavor);
+        return false;
     }
 }

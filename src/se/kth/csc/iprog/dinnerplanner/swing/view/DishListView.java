@@ -98,7 +98,7 @@ public class DishListView extends JPanel{
 		scroll.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		scroll.setVisibleRowCount(-1);
 		scroll.setCellRenderer(new CellRenderer());
-		scroll.setTransferHandler(new DishTransferHandler(false));
+		scroll.setTransferHandler(new DishSenderHandler());
 		scroll.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		panel.add(scroll, BorderLayout.CENTER);
 		return panel;
