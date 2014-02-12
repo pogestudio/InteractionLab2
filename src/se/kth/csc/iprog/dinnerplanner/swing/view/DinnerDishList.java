@@ -10,6 +10,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.DropMode;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -30,6 +31,7 @@ public class DinnerDishList extends JList {
 	private static final long serialVersionUID = 1L;
 	private static JButton testbutton;
 	private static JPanel testpanel;
+	private static JLabel testimage;
 	
 	
 	private DinnerModel chosenModel;
@@ -54,19 +56,13 @@ public class DinnerDishList extends JList {
 		    image.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 		    
 		    button = new JButton("X");
+		    testimage = image;
 		    testbutton = button;
 		    testpanel = this;
 		    add(text);
 			this.add(image);			
 			this.add(text);		
 			this.add(button);
-			
-			this.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent event) {
-					System.out.println("ASDASDF");
-				}
-			});
 		  }
 		
 		@Override
@@ -114,18 +110,19 @@ public class DinnerDishList extends JList {
 		return this.chosenModel;
 	}
 	
+	@SuppressWarnings("deprecation")
 	private void clickButton(Point point) {
 	    int index = locationToIndex(point);
 		
-		Object o = getModel().getElementAt(index);
+		DefaultListModel m = (DefaultListModel)getModel();
 	
-		point.y -= testpanel.getBounds().height * index;
+		point.y -= testpanel.getPreferredSize().height * index;
 		
-		index = 32;		
-		System.out.println(point.x + ", " + point.y + " : " + index);
-
-		System.out.println(testpanel.getHeight());
-		System.out.println(testpanel.getPreferredSize().height);
-		System.out.println(testbutton.getBounds());
+		if(testbutton.getBounds().inside(point.x, point.y)) {
+			m.remove(index);
+		}
+		if(testimage.getBounds().inside(point.x, point.y)) {
+			DishDetails.OpenWindow((Dish)m.getElementAt(index));
+		}
 	}
 }
