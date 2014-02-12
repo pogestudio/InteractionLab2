@@ -5,8 +5,12 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Insets;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.DropMode;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -25,6 +29,10 @@ import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
 public class DinnerDishList extends JList {
 
 	private static final long serialVersionUID = 1L;
+	private static JButton testbutton;
+	private static JPanel testpanel;
+	private static JLabel testimage;
+	
 	
 	private DinnerModel chosenModel;
 
@@ -48,6 +56,9 @@ public class DinnerDishList extends JList {
 		    image.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 		    
 		    button = new JButton("X");
+		    testimage = image;
+		    testbutton = button;
+		    testpanel = this;
 		    add(text);
 			this.add(image);			
 			this.add(text);		
@@ -81,6 +92,12 @@ public class DinnerDishList extends JList {
 		setDragEnabled(false);
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		setTransferHandler(new DishReceiverHandler());
+		addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent event) {
+				clickButton(event.getPoint());
+			}
+		});
 	}
 	
 	public void setDinnerModel(DinnerModel model)
@@ -91,5 +108,21 @@ public class DinnerDishList extends JList {
 	public DinnerModel getDinnerModel()
 	{
 		return this.chosenModel;
+	}
+	
+	@SuppressWarnings("deprecation")
+	private void clickButton(Point point) {
+	    int index = locationToIndex(point);
+		
+		DefaultListModel m = (DefaultListModel)getModel();
+	
+		point.y -= testpanel.getPreferredSize().height * index;
+		
+		if(testbutton.getBounds().inside(point.x, point.y)) {
+			m.remove(index);
+		}
+		if(testimage.getBounds().inside(point.x, point.y)) {
+			DishDetails.OpenWindow((Dish)m.getElementAt(index));
+		}
 	}
 }

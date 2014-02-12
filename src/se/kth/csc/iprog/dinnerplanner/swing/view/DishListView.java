@@ -4,8 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Insets;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -17,7 +20,8 @@ import se.kth.csc.iprog.dinnerplanner.model.Dish;
 import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
 public class DishListView extends JPanel{
 	private static final long serialVersionUID = 1L;
-
+	private JList dishes;
+	
 	public static class CellRenderer extends JPanel implements ListCellRenderer {
 		private static final long serialVersionUID = 1L;
 
@@ -93,14 +97,24 @@ public class DishListView extends JPanel{
 		for (Dish dish : dishList) {
 			model.addElement(dish);
 		}
-		JList scroll = new JList(model);
-		scroll.setDragEnabled(true);
-		scroll.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-		scroll.setVisibleRowCount(-1);
-		scroll.setCellRenderer(new CellRenderer());
-		scroll.setTransferHandler(new DishSenderHandler());
-		scroll.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		panel.add(scroll, BorderLayout.CENTER);
+		dishes = new JList(model);
+		dishes.setDragEnabled(true);
+		dishes.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		dishes.setVisibleRowCount(-1);
+		dishes.setCellRenderer(new CellRenderer());
+		dishes.setTransferHandler(new DishSenderHandler());
+		dishes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		panel.add(dishes, BorderLayout.CENTER);
+		
+		dishes.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent event) {
+				
+				if(event.getClickCount() == 2)
+					clickButton(event.getPoint());
+			}
+		});
+		
 		return panel;
 	}
 	
@@ -127,5 +141,12 @@ public class DishListView extends JPanel{
 		}
 		return dishNames;
 	}
-	
+
+	@SuppressWarnings("deprecation")
+	private void clickButton(Point point) {
+	    int index = dishes.locationToIndex(point);
+		
+		DefaultListModel m = (DefaultListModel)dishes.getModel();
+		DishDetails.OpenWindow((Dish)m.getElementAt(index));	
+	}
 }
