@@ -12,6 +12,10 @@ import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.TransferHandler;
 
+import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
+import se.kth.csc.iprog.dinnerplanner.model.Dish;
+import se.kth.csc.iprog.dinnerplanner.model.IDinnerModel;
+
 public class DishReceiverHandler extends TransferHandler {
 	private static final long serialVersionUID = 1L;
     private final DataFlavor localObjectFlavor;
@@ -19,15 +23,15 @@ public class DishReceiverHandler extends TransferHandler {
     private int[] indices;
     private int addIndex = -1; //Location where items were added
     private int addCount; //Number of items added.
-
+    private DefaultListModel dinner;
     
-    public DishReceiverHandler() {
+    public DishReceiverHandler(DefaultListModel dinner) {
         super();
         localObjectFlavor = new ActivationDataFlavor(Object[].class, DataFlavor.javaJVMLocalObjectMimeType, "Array of items");
-
+        this.dinner = dinner;
     }
 	@Override
-	protected Transferable createTransferable(JComponent c) {
+	protected Transferable createTransferable( JComponent c) {
         source = (JList)c;
         indices = source.getSelectedIndices();
         @SuppressWarnings("deprecation") Object[] transferedObjects = source.getSelectedValues();
@@ -39,6 +43,8 @@ public class DishReceiverHandler extends TransferHandler {
 	    if(!info.isDrop()) {
 	    	return false;
 	    }
+	    
+	    
         JList target = (JList)info.getComponent();
         JList.DropLocation dl = (JList.DropLocation)info.getDropLocation();
         DefaultListModel listModel = (DefaultListModel)target.getModel();
@@ -49,13 +55,34 @@ public class DishReceiverHandler extends TransferHandler {
             index = max;
         }
         addIndex = index;
+        
+        
 
         try{
             Object[] values = (Object[])info.getTransferable().getTransferData(localObjectFlavor);
             for(int i=0;i<values.length;i++) {
                 int idx = index++;
-                listModel.add(idx, values[i]);
-                target.addSelectionInterval(idx, idx);
+
+                Dish d = (Dish)values[i];
+                
+                try{
+                for(int j = 0; j < dinner.getSize(); ++j) {
+                	Dish d2 = (Dish)dinner.get(j);
+                	if(d2.getType() == d.getType()) {
+                		dinner.remove(j);
+                		break;
+                	}
+                }
+                }
+                catch(Exception e) {
+                	e.printStackTrace();
+                }
+                
+                if(idx > dinner.getSize())
+                	idx = dinner.getSize();
+
+               	listModel.add(idx, values[i]);
+               	target.addSelectionInterval(idx, idx);
                
             }
             addCount = target.equals(source) ? values.length : 0;

@@ -86,14 +86,14 @@ public class DinnerDishList extends JList {
 		}
 	}
 
-	public DinnerDishList(ListModel model) {
+	public DinnerDishList(DefaultListModel model) {
 		super(model);
 
 		setCellRenderer(new CellRenderer());
 		setDropMode(DropMode.INSERT);
 		setDragEnabled(false);
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		setTransferHandler(new DishReceiverHandler());
+		setTransferHandler(new DishReceiverHandler(model));
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent event) {
