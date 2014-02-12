@@ -24,6 +24,7 @@ import se.kth.csc.iprog.dinnerplanner.model.Dish;
 import external.WrapLayout;
 
 import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
+import se.kth.csc.iprog.dinnerplanner.model.DishListListener;
 import se.kth.csc.iprog.dinnerplanner.model.Ingredient;
 
 public class DinnerListView extends JPanel implements ChangeListener{
@@ -69,6 +70,11 @@ public class DinnerListView extends JPanel implements ChangeListener{
 		for(Dish d : thaDinnerModel.getFullMenu()) {
 			lmodel.addElement(d);
 		}
+		
+		DishListListener dishListener = new DishListListener();
+		dishListener.setDinnerList(lmodel);
+		dishListener.setThaDinnerModel(thaDinnerModel);
+		lmodel.addListDataListener(new DishListListener());
 		
 		dishes = new DinnerDishList(lmodel);
 		dishes.setLayout(new WrapLayout());

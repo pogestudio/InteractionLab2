@@ -200,20 +200,46 @@ public class DinnerModel implements IDinnerModel {
 	}
 	
 	// Add dish to currently selectd dishes!
-	public void selectDish(Dish dishToSelect)
-	{
-		for(int i=0;selectedDishes.size()>i;i++ ) {
-			if(selectedDishes.get(i).type == dishToSelect.type) {
-				selectedDishes.remove(i);
+		public void selectDish(Dish dishToSelect)
+		{
+			for(int i=0;selectedDishes.size()>i;i++ ) {
+				if(selectedDishes.get(i).type == dishToSelect.type) {
+					selectedDishes.remove(i);
+				}
 			}
-		}
-		   
+			   
 
-		selectedDishes.add(dishToSelect);
-		System.out.println("Added dish!");
-	}
-	
-	
+			selectedDishes.add(dishToSelect);
+			System.out.println("Added dish!");
+		}
+		
+		
+		// Add dish to currently selectd dishes!
+		public void deleteDish(Dish dishToDelete)
+		{
+			for(Dish d : selectedDishes)
+			{
+				if(d == dishToDelete)
+				{
+					selectedDishes.remove(dishToDelete);
+				}
+			}
+			System.out.println("Removed dish");
+		}
+		
+		
+		// Add dish to currently selectd dishes!
+		public void printAllDishes()
+		{
+			System.out.println("WANT TODOPRINT TIDSHES");
+			for(Dish d : selectedDishes)
+			{
+				System.out.println("dish:: dish" + d.getName());				
+			}
+
+		}
+		
+		
 	
 	//TEMPORARY THING
 	//#TODO remove
