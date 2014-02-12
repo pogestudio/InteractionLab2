@@ -95,8 +95,7 @@ public class DinnerListView extends JPanel implements ChangeListener{
 			  public void actionPerformed(ActionEvent evt) {
 			   System.out.println("want to POPPRESENTATION");
 			   
-			   DinnerModel dinnerModel = new DinnerModel();
-			   if(dinnerModel != null){
+			   if(thaDinnerModel != null){
 				   DinnerPrepView.OpenWindow(thaDinnerModel);
 			   }
 			  }
