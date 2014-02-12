@@ -71,6 +71,9 @@ public class DinnerListView extends JPanel implements ChangeListener{
 			lmodel.addElement(d);
 		}
 		
+		DishListListener dishListener = new DishListListener();
+		dishListener.setDinnerList(lmodel);
+		dishListener.setThaDinnerModel(thaDinnerModel);
 		lmodel.addListDataListener(new DishListListener());
 		
 		dishes = new DinnerDishList(lmodel);
